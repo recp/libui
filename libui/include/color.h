@@ -1,10 +1,9 @@
-//
-//  color.h
-//  libui-test
-//
-//  Created by Recep ASLANTAS on 3/29/15.
-//  Copyright (c) 2015 Recep ASLANTAS. All rights reserved.
-//
+/*
+ * Copyright (c), Recep Aslantas. All rights reserved.
+ *
+ * MIT License (MIT), http://opensource.org/licenses/MIT
+ * Full license can be found in the LICENSE file
+ */
 
 #ifndef __libui__color__
 #define __libui__color__
