@@ -9,9 +9,9 @@
 #ifndef __libui__cocoa__view__
 #define __libui__cocoa__view__
 
-#include "../../geometry.h"
-#include "../../view.h"
-#include "../../color.h"
+#include "../../../include/geometry.h"
+#include "../../../include/view.h"
+#include "../../../include/color.h"
 
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>
