@@ -1,2 +1,9 @@
 *.xcodeproj
 *.xcworkspace
+*.sln
+*.vcxproj
+*.vcxproj.*
+*.suo
+*.sdf
+*.opensdf
+ipch/
