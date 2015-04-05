@@ -17,7 +17,7 @@ typedef struct CGColor * CGColorRef;
 
 namespace ui {
 
-struct Color {
+struct _libui_export Color {
   const float red;
   const float green;
   const float blue;

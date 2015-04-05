@@ -18,7 +18,7 @@ namespace ui {
 
 class Window;
   
-class View {
+class _libui_export View {
 public:
   View(Rect rect);
   

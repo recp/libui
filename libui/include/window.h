@@ -35,7 +35,7 @@ enum WindowStyle {
                               |kWindowStyleMaximizeButton
 };
 
-class Window /* : public IWindow */ {
+class _libui_export Window /* : public IWindow */ {
 public:
   Window(Rect rect, int style = 0);
   Window(Window * parent,  Rect rect, int style = 0);

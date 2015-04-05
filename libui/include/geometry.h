@@ -25,7 +25,7 @@ enum CoordSystem2d {
   kCoordSystem2dRightBottom
 };
   
-struct Point {
+struct _libui_export Point {
   double x;
   double y;
 
@@ -40,7 +40,7 @@ struct Point {
 #endif
 };
 
-struct Size {
+struct _libui_export Size {
   float width;
   float height;
   
@@ -49,12 +49,12 @@ struct Size {
 #endif
 };
 
-struct Vector {
+struct _libui_export Vector {
   float dx;
   float dy;
 };
   
-struct Rect {
+struct _libui_export Rect {
   Point origin;
   Size size;
   
