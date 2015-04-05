@@ -20,13 +20,13 @@ void ui::Window::WindowImpl::show() const {
  
 }
 
-//ui::View * wnd::Window::WindowImpl::contentView() const {
-//  return m_contentView;
-//}
-//
-//void wnd::Window::WindowImpl::setContentView(ui::View *view) {
-//
-//}
+ui::View * ui::Window::WindowImpl::contentView() const {
+  return m_contentView;
+}
+
+void ui::Window::WindowImpl::setContentView(ui::View *view) {
+
+}
 
 ui::Window::WindowImpl::~WindowImpl() {
   m_wnd = nullptr;
