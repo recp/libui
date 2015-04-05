@@ -5,9 +5,14 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "app.h"
-#include "cocoa/app.h"
-#include "cocoa/wnd/window.h"
+#include "../include/app.h"
+
+#ifdef __APPLE__
+# include "cocoa/app.h"
+# include "cocoa/wnd/window.h"
+#elif _WIN32
+# include "win/win-app.h"
+#endif
 
 namespace app = ui;
 
@@ -19,6 +24,6 @@ void app::App::run() {
   m_impl->run();
 }
 
-void app::App::run(Window *rootWindow) {
-  m_impl->run(rootWindow);
-}
+//void app::App::run(Window *rootWindow) {
+//  m_impl->run(rootWindow);
+//}

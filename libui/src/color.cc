@@ -5,13 +5,7 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "color.h"
-
-class Foo
-{
-public:
-  static const int bar = 3;
-};
+#include "../include/color.h"
 
 ui::Color::Color(float r, float g, float b, float a)
   : red(r), green(g), blue(b), alpha(a) {
@@ -19,7 +13,10 @@ ui::Color::Color(float r, float g, float b, float a)
 };
 
 ui::Color::Color(const Color& color)
-  : red(color.red), green(color.green), blue(color.blue), alpha(color.alpha) {
+  : red(color.red), 
+    green(color.green), 
+    blue(color.blue), 
+    alpha(color.alpha) {
 
 }
 
@@ -34,7 +31,7 @@ ui::Color::operator = (const Color& color) {
 //  return Color(color.red, color.green, color.blue, color.alpha);
 }
 
-ui::Color ui::Color::clearColor()    { return ui::Color(0.0, 0.0, 0.0, 0.0); }
+ui::Color ui::Color::clearColor()   { return ui::Color(0.0, 0.0, 0.0, 0.0); }
 ui::Color ui::Color::blackColor()   { return ui::Color(0.0, 0.0, 0.0, 1.0); }
 ui::Color ui::Color::whiteColor()   { return ui::Color(1.0, 1.0, 1.0, 1.0); }
 

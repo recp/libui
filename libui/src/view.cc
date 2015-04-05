@@ -5,8 +5,14 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "view.h"
-#include "cocoa/view/view.h"
+#include "../include/view.h"
+
+#ifdef __APPLE__
+# include "cocoa/view/view.h"
+#elif _WIN32
+# include "win/view/win-view.h"
+#endif
+
 #include <functional>
 
 ui::View::View(Rect rect) {
@@ -29,11 +35,11 @@ void ui::View::setFrame(Rect frame) const {
   m_impl->setFrame(frame);
 }
 
-void ui::View::View::addSubview(View *subview) const {
+void ui::View::addSubview(View *subview) const {
   m_impl->addSubview(subview);
 }
 
-void ui::View::View::removeFromSuperview() const {
+void ui::View::removeFromSuperview() const {
   m_impl->removeFromSuperview();
 }
 
