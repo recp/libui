@@ -8,6 +8,18 @@
 #include "../include/types.h"
 
 #if defined(_WIN32) || defined(WIN32)
-# define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
+
+// Exclude rarely-used stuff from Windows headers
+# define WIN32_LEAN_AND_MEAN 
 # include <SDKDDKVer.h>
+
+// Windows Header Files:
+# include <windows.h>
+
+// C RunTime Header Files
+# include <stdlib.h>
+# include <malloc.h>
+# include <memory.h>
+# include <tchar.h>
+
 #endif
