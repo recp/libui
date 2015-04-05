@@ -8,6 +8,7 @@
 #ifndef __libui_win_window__
 #define __libui_win_window__
 
+#include "../../config.h"
 #include "../../../include/ui-geometry.h"
 #include "../../../include/ui-window.h"
 #include "../../../include/ui-view.h"
@@ -27,8 +28,9 @@ public:
   ~WindowImpl();
 private:
   int m_style;
-  void * m_wnd;
   View * m_contentView;
+  WORD m_className;
+  HINSTANCE m_hInstance;
   const Window * m_self;
 };
 
