@@ -8,9 +8,9 @@
 #ifndef __libui_win_window__
 #define __libui_win_window__
 
-#include "../../../include/geometry.h"
-#include "../../../include/window.h"
-#include "../../../include/view.h"
+#include "../../../include/ui-geometry.h"
+#include "../../../include/ui-window.h"
+#include "../../../include/ui-view.h"
 
 namespace ui {
 

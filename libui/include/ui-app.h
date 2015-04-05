@@ -9,7 +9,7 @@
 #define __libui__app__
 
 #include "types.h"
-#include "window.h"
+#include "ui-window.h"
 
 namespace ui {
 

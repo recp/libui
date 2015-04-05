@@ -8,9 +8,9 @@
 #ifndef __libui__win__view__
 #define __libui__win__view__
 
-#include "../../../include/geometry.h"
-#include "../../../include/view.h"
-#include "../../../include/color.h"
+#include "../../../include/ui-geometry.h"
+#include "../../../include/ui-view.h"
+#include "../../../include/ui-color.h"
 
 #include <vector>
 

@@ -9,8 +9,8 @@
 #define __libui__window__
 
 #include "types.h"
-#include "geometry.h"
-#include "view.h"
+#include "ui-geometry.h"
+#include "ui-view.h"
 
 namespace ui {
 

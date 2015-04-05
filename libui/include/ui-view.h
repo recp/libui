@@ -9,8 +9,8 @@
 #define __libui__view__
 
 #include "types.h"
-#include "color.h"
-#include "geometry.h"
+#include "ui-color.h"
+#include "ui-geometry.h"
 
 #include <vector>
 

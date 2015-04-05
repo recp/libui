@@ -5,7 +5,7 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "../include/view.h"
+#include "../include/ui-view.h"
 
 #ifdef __APPLE__
 # include "cocoa/view/view.h"

@@ -5,7 +5,7 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "../include/color.h"
+#include "../include/ui-color.h"
 
 ui::Color::Color(float r, float g, float b, float a)
   : red(r), green(g), blue(b), alpha(a) {

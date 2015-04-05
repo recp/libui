@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #endif
 
-#include "../../include/window.h"
+#include "../../include/ui-window.h"
 
 #ifdef __OBJC__
 @interface CocoaApp : NSObject

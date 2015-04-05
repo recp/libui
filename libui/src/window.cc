@@ -5,8 +5,8 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "../include/window.h"
-#include "../include/geometry.h"
+#include "../include/ui-window.h"
+#include "../include/ui-geometry.h"
 
 #ifdef __APPLE__
 # include "cocoa/wnd/window.h"

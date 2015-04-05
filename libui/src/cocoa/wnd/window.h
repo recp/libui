@@ -17,9 +17,9 @@
 typedef objc_object CocoaWindow;
 #endif
 
-#include "../../../include/geometry.h"
-#include "../../../include/window.h"
-#include "../../../include/view.h"
+#include "../../../include/ui-geometry.h"
+#include "../../../include/ui-window.h"
+#include "../../../include/ui-view.h"
 
 #ifdef __OBJC__
 @interface CocoaWindow : NSWindow
