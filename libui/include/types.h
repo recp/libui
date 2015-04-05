@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c), Recep Aslantas. All rights reserved.
 *
 * MIT License (MIT), http://opensource.org/licenses/MIT
@@ -22,6 +22,18 @@
 # endif
 #endif
 
+/*
+ Enable standart C/C++ entry point
+  
+ When client program include this header then the WinMain wont be called as 
+ program entry.
+
+ If client progams really need to use WinMain/_tWinMain... then define 
+ this maco before including types.h like this:
+ 
+ #define _libui_skip_crt_entry
+ #include "app.h" // app.h has already include types.h
+ */
 #ifndef _libui_skip_crt_entry
 # if defined(_WIN32) && defined(_MSC_VER)
 #   pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
