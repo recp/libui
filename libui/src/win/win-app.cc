@@ -13,7 +13,15 @@ ui::AppImpl::AppImpl() {
 }
 
 void ui::AppImpl::run() {
+  MSG msg;
+  // HACCEL hAccelTable;
 
+  while (GetMessage(&msg, NULL, 0, 0)) {
+   // if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+   // }
+  }
 }
 
 //void app::appimpl::run(window *rootwindow) {
