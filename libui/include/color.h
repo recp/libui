@@ -8,6 +8,8 @@
 #ifndef __libui__color__
 #define __libui__color__
 
+#include "types.h"
+
 #ifdef __OBJC__
 @class NSColor;
 typedef struct CGColor * CGColorRef;

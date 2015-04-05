@@ -8,6 +8,7 @@
 #ifndef __libui__window__
 #define __libui__window__
 
+#include "types.h"
 #include "geometry.h"
 #include "view.h"
 

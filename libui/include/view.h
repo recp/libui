@@ -8,6 +8,7 @@
 #ifndef __libui__view__
 #define __libui__view__
 
+#include "types.h"
 #include "color.h"
 #include "geometry.h"
 
