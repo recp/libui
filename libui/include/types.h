@@ -8,6 +8,10 @@
 #ifndef __libui__types__
 #define __libui__types__
 
+/*
+  The _libui_dll macro should not be defined in the client programs. 
+  This is for exporting symbols for dynamic [link] library  
+ */
 #ifdef __APPLE__
 # define _libui_export  
 #elif defined(_WIN32)
@@ -15,6 +19,12 @@
 #   define _libui_export __declspec(dllexport)
 # else
 #   define _libui_export __declspec(dllimport)
+# endif
+#endif
+
+#ifndef _libui_skip_crt_entry
+# if defined(_WIN32) && defined(_MSC_VER)
+#   pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 # endif
 #endif
 
