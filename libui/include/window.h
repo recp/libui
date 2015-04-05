@@ -12,7 +12,7 @@
 #include "view.h"
 
 namespace ui {
-  
+
 //class IWindow {
 //public:
 //  virtual const Rect&& getRect() const = 0;
@@ -20,17 +20,19 @@ namespace ui {
 //};
 
 enum WindowStyle {
-  kWindowStyleDefault                 = 0,
-  kWindowStyleTitled                    = 1 << 0,
-  kWindowStyleBorderless           = 1 << 1,
-  kWindowStyleFullscreen            = 1 << 2,
+  kWindowStyleDefault        = 0,
+  kWindowStyleTitled         = 1 << 0,
+  kWindowStyleBorderless     = 1 << 1,
+  kWindowStyleFullscreen     = 1 << 2,
 
-  kWindowStyleCloseButton        = 1 << 3,
-  kWindowStyleMinimizeButton  = 1 << 4,
+  kWindowStyleCloseButton    = 1 << 3,
+  kWindowStyleMinimizeButton = 1 << 4,
   kWindowStyleMaximizeButton = 1 << 5,
-  
-  kWindowStyleAllButtons            = kWindowStyleCloseButton|kWindowStyleMinimizeButton|kWindowStyleMaximizeButton
-} ;
+
+  kWindowStyleAllButtons     = kWindowStyleCloseButton
+                              |kWindowStyleMinimizeButton
+                              |kWindowStyleMaximizeButton
+};
 
 class Window /* : public IWindow */ {
 public:
@@ -47,25 +49,25 @@ public:
 
   const Rect&& getRect() const;
   void setRect(Rect rect) const;
-  
+
   bool isFullScreen() const;
   void toogleFullScreen() const;
-  
+
   View * contentView() const;
   void setContentView(View * view) const;
-  
+
   void center();
   void centerVertical();
   void centerHorizontal();
-  
+
   // Iki duruma da WindowAnimation eklenebilir
   void show() const;
   void hide() const;
-  
+
   ~Window();
 private:
   Window() = delete;
-  
+
   class WindowImpl;
   WindowImpl* m_impl;
 };

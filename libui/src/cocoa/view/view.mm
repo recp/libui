@@ -20,7 +20,7 @@
 - (void)setBackgroundColor: (ui::Color)backgroundColor {
   [self.layer setBackgroundColor: backgroundColor];
   [self setNeedsDisplay: YES];
-  
+
 //  CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 //  CGContextSetRGBFillColor (context, 1.0, 0.0, 1.0, 1.0);
 //  CGContextFillRect(context, NSRectToCGsRect(self.frame));
@@ -33,11 +33,11 @@
 }
 
 - (void)drawRect: (NSRect)dirtyRect {
-  
+
 //  CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 //  CGContextSetRGBFillColor (context, 1.0, 0.0, 1.0, 1.0);
 //  CGContextFillRect(context, NSRectToCGRect(self.frame));
-  
+
   [super drawRect: dirtyRect];
 }
 
@@ -48,15 +48,24 @@
 @end
 
 ui::Color::operator NSColor * () {
-  return [NSColor colorWithRed: this->red green: this->green blue: this->blue alpha: this->alpha];
+  return [NSColor colorWithRed: this->red
+                         green: this->green
+                          blue: this->blue
+                         alpha: this->alpha];
 }
 
 ui::Color::operator CGColorRef() {
-  return CGColorCreateGenericRGB(this->red, this->green, this->blue, this->alpha);
+  return CGColorCreateGenericRGB(this->red,
+                                 this->green,
+                                 this->blue,
+                                 this->alpha);
 }
 
 ui::Rect::operator CGRect() {
-  return CGRectMake(this->origin.x, this->origin.y, this->size.width, this->size.height);
+  return CGRectMake(this->origin.x,
+                    this->origin.y,
+                    this->size.width,
+                    this->size.height);
 }
 
 ui::Size::operator CGSize() {
@@ -70,12 +79,12 @@ ui::Point::operator CGPoint() {
 ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) : m_self(_self) {
   m_subviews = new std::vector<View *>();
   m_frame = rect;
-  
+
   NSRect _nsRect = NSMakeRect(rect.origin.x,
-                                                           rect.origin.y,
-                                                           rect.size.width,
-                                                           rect.size.height);
-  
+                              rect.origin.y,
+                              rect.size.width,
+                              rect.size.height);
+
   m_view = [[CocoaView alloc] initWithFrame: _nsRect];
 }
 
@@ -101,12 +110,12 @@ void ui::View::ViewImpl::addSubview(View *subview) const {
   /* Because of isFlipped  */
 //  Rect selfFrame = this->getFrame();
 //  Rect subviewFrame = subview->getFrame();
-  
+
 //  double originY = selfFrame.size.height - subviewFrame.size.height - subviewFrame.origin.y;
 //  subviewFrame.origin.y = originY;
-  
+
   subview->setFrame(subview->getFrame());
-  
+
   [m_view addSubview: subview->m_impl->m_view];
   m_subviews->push_back(subview);
 }

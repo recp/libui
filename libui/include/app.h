@@ -8,11 +8,12 @@
 #ifndef __libui__app__
 #define __libui__app__
 
+#include "types.h"
 #include "window.h"
 
 namespace ui {
-  
-class App {
+
+class _libui_export App {
 public:
   App();
   void run();

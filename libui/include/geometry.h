@@ -16,12 +16,12 @@ typedef struct CGRect CGRect;
 
 namespace ui {
 
-typedef enum {
+enum CoordSystem2d {
   kCoordSystem2dLeftTop = 0,
   kCoordSystem2dLeftBottom,
   kCoordSystem2dRightTop,
   kCoordSystem2dRightBottom
-} CoordSystem2d;
+};
   
 struct Point {
   double x;
