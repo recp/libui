@@ -8,7 +8,7 @@
 #ifndef __libui__color__
 #define __libui__color__
 
-#include "types.h"
+#include "ui-base.h"
 
 #ifdef __OBJC__
 @class NSColor;

@@ -8,7 +8,7 @@
 #ifndef __libui__geometry__
 #define __libui__geometry__
 
-#include "types.h"
+#include "ui-base.h"
 
 #ifdef __OBJC__
 typedef struct CGPoint CGPoint;

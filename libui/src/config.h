@@ -5,7 +5,7 @@
  * Full license can be found in the LICENSE file
  */
 
-#include "../include/types.h"
+#include "../include/ui-base.h"
 
 #if defined(_WIN32) || defined(WIN32)
 

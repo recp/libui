@@ -8,7 +8,7 @@
 #ifndef __libui__app__
 #define __libui__app__
 
-#include "types.h"
+#include "ui-base.h"
 #include "ui-window.h"
 
 namespace ui {

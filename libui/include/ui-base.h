@@ -29,10 +29,10 @@
  program entry.
 
  If client progams really need to use WinMain/_tWinMain... then define 
- this maco before including types.h like this:
+ this maco before including ui-base.h like this:
  
  #define _libui_skip_crt_entry
- #include "app.h" // app.h has already include types.h
+ #include "app.h" // app.h has already include ui-base.h
  */
 #ifndef _libui_skip_crt_entry
 # if defined(_WIN32) && defined(_MSC_VER)
