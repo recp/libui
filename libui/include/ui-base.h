@@ -13,13 +13,13 @@
   This is for exporting symbols for dynamic [link] library  
  */
 #ifdef __APPLE__
-# define _libui_export  
+#  define _libui_export __attribute__((visibility("default")))
 #elif defined(_WIN32)
-# ifdef _libui_dll
-#   define _libui_export __declspec(dllexport)
-# else
-#   define _libui_export __declspec(dllimport)
-# endif
+#  ifdef _libui_dll
+#    define _libui_export __declspec(dllexport)
+#  else
+#    define _libui_export __declspec(dllimport)
+#  endif
 #endif
 
 /*
@@ -32,7 +32,7 @@
  this maco before including ui-base.h like this:
  
  #define _libui_skip_crt_entry
- #include "app.h" // app.h has already include ui-base.h
+ #include "app.h" // app.h has already included ui-base.h
  */
 #ifndef _libui_skip_crt_entry
 # if defined(_WIN32) && defined(_MSC_VER)
