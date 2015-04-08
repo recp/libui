@@ -23,7 +23,7 @@
 #endif
 
 /*
- Enable standart C/C++ entry point
+ Enable standart C/C++ entry point 
   
  When client program include this header then the WinMain wont be called as 
  program entry.
