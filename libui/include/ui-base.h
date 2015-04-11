@@ -8,6 +8,8 @@
 #ifndef __libui__types__
 #define __libui__types__
 
+typedef const char * CStringPtr;
+
 /*
   The _libui_dll macro should not be defined in the client programs. 
   This is for exporting symbols for dynamic [link] library  
