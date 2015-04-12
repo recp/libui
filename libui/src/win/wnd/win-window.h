@@ -27,10 +27,10 @@ public:
 
   ~WindowImpl();
 private:
-  LRESULT CALLBACK WndProc(HWND hWnd,
-                           UINT message,
-                           WPARAM wParam,
-                           LPARAM lParam);
+  static LRESULT CALLBACK WndProc(HWND hWnd,
+                                  UINT message,
+                                  WPARAM wParam,
+                                  LPARAM lParam);
 
   int            m_style;
   View *         m_contentView;

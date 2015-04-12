@@ -32,7 +32,7 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
 
   wcex.cbSize        = sizeof(WNDCLASSEX);
   wcex.style         = wndClassStyle;
-  wcex.lpfnWndProc   = ::DefWindowProcW; // TODO: will be replaced by custom
+  wcex.lpfnWndProc   = WindowImpl::WndProc;
   wcex.hInstance     = m_hInstance;
   wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
