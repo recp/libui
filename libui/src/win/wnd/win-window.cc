@@ -10,6 +10,7 @@
 
 #include <assert.h>
 #include "../../utils/logutils.h"
+#include "../../utils/utils.h"
 
 #include <stdio.h>
 
@@ -40,7 +41,13 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   // wcex.hIconSm =
   
   RegisterClassEx(&wcex);
-  
+
+#ifdef _DEBUG
+  CMutStringPtr rectString = utils::stringFromRect(rect);
+  debug::logt("win", "window rect: %s", rectString);
+  free(rectString);
+#endif
+
   m_hWnd = CreateWindow(m_szWindowClass, 
                         m_szTitle, 
                         WS_OVERLAPPEDWINDOW,
