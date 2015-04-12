@@ -166,5 +166,5 @@ void ui::Window::WindowImpl::setContentView(ui::View *view) {
 }
 
 ui::Window::WindowImpl::~WindowImpl() {
-
+  DestroyWindow(m_hWnd);
 }
