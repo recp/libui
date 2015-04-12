@@ -148,7 +148,7 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
 }
 
 void ui::Window::WindowImpl::setTitle(const char *title) const {
-  // MultiByteToWideChar can be used for non-ansi strings
+  // TODO: MultiByteToWideChar can be used for non-ansi strings
   ::SetWindowTextA(m_hWnd, title);
 }
 
