@@ -25,7 +25,7 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   memcpy(m_szWindowClass, defaultClassName, strlen(defaultClassName));
 
   DWORD wndClassStyle = CS_HREDRAW | CS_VREDRAW;
-  if (!(style & ui::kWindowStyleCloseButton))
+  if (!(style & kWindowStyleCloseButton) && style != kWindowStyleDefault)
     wndClassStyle |= CS_NOCLOSE;
 
   WNDCLASSEX wcex;
