@@ -9,6 +9,7 @@
 #define __libui__types__
 
 typedef const char * CStringPtr;
+typedef char * CMutStringPtr;
 
 /*
   The _libui_dll macro should not be defined in the client programs. 
