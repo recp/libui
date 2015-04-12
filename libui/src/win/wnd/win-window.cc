@@ -14,6 +14,8 @@
 
 #include <stdio.h>
 
+DWORD translateWndStyleToWin32WS(int style);
+
 ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   : m_self(_self) {
 
@@ -22,20 +24,21 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   static const char * defaultClassName = "libui_def_wnd";
   memcpy(m_szWindowClass, defaultClassName, strlen(defaultClassName));
 
+  DWORD wndClassStyle = CS_HREDRAW | CS_VREDRAW;
+  if (!(style & ui::kWindowStyleCloseButton))
+    wndClassStyle |= CS_NOCLOSE;
+
   WNDCLASSEX wcex;
 
-  wcex.cbSize = sizeof(WNDCLASSEX);
-
-  wcex.style         = CS_HREDRAW | CS_VREDRAW;
+  wcex.cbSize        = sizeof(WNDCLASSEX);
+  wcex.style         = wndClassStyle;
   wcex.lpfnWndProc   = ::DefWindowProcW; // TODO: will be replaced by custom
- 
-  wcex.cbClsExtra    = 0;
-  wcex.cbWndExtra    = 0;
   wcex.hInstance     = m_hInstance;
   wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
   wcex.lpszClassName = m_szWindowClass;
-
+  wcex.cbClsExtra    = 0;
+  wcex.cbWndExtra    = 0;
   wcex.hIcon         = 0;
   wcex.lpszMenuName  = 0;
   wcex.hIconSm       = 0;
@@ -48,9 +51,10 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   free(rectString);
 #endif
 
+  DWORD windowMask = translateWndStyleToWin32WS(style);
   m_hWnd = CreateWindow(m_szWindowClass, 
                         m_szTitle, 
-                        WS_OVERLAPPEDWINDOW,
+                        windowMask,
                         rect.origin.x, 
                         rect.origin.y, 
                         rect.size.width, 
@@ -66,6 +70,48 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   }
 
   m_self = _self;
+}
+
+DWORD translateWndStyleToWin32WS(int style) {
+  DWORD winWS = 0L;
+  if (style == ui::kWindowStyleDefault) {
+    // it is same with WS_OVERLAPPEDWINDOW
+    winWS = (WS_OVERLAPPED
+           | WS_CAPTION
+           | WS_SYSMENU
+           | WS_THICKFRAME
+           | WS_MINIMIZEBOX
+           | WS_MAXIMIZEBOX);
+
+    return winWS;
+  }
+
+  BOOL borderless = false;
+
+  if (style & ui::kWindowStyleBorderless) {
+    borderless = true;
+  } else {
+    winWS |= (WS_OVERLAPPED
+             | WS_CAPTION
+             | WS_SYSMENU);
+  }
+
+  if ((style & ui::kWindowStyleTitled) || !borderless)
+    winWS |= WS_CAPTION;
+
+  if (style & ui::kWindowStyleFullscreen)
+    winWS |= WS_MAXIMIZE;
+
+  //if (style & ui::kWindowStyleCloseButton)
+  // winWS |= ? See window class style
+
+  if (style & ui::kWindowStyleMaximizeButton)
+    winWS |= WS_MAXIMIZEBOX;
+
+  if (style & ui::kWindowStyleMinimizeButton)
+    winWS |= WS_MINIMIZEBOX;
+
+  return winWS;
 }
 
 LRESULT CALLBACK 
