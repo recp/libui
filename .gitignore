@@ -8,3 +8,4 @@
 *.opensdf
 ipch/
 Debug/
+.DS_Store
