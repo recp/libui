@@ -18,8 +18,8 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
 
   m_hInstance = GetModuleHandle(NULL);
 
-  const char * classnm = "ede";
-  memcpy(m_szWindowClass, classnm, strlen(classnm));
+  static const char * defaultClassName = "libui_def_wnd";
+  memcpy(m_szWindowClass, defaultClassName, strlen(defaultClassName));
 
   WNDCLASSEX wcex = {0};
  //  memset(&wcex, '\0', sizeof(wcex));
