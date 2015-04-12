@@ -1,5 +1,5 @@
 /*
- * Copyright (c), Recep Aslantas. All rights reserved.
+ * Copyright (c), Recep Aslantas.
  *
  * MIT License (MIT), http://opensource.org/licenses/MIT
  * Full license can be found in the LICENSE file
@@ -27,10 +27,19 @@ public:
 
   ~WindowImpl();
 private:
-  int m_style;
-  View * m_contentView;
-  WORD m_className;
-  HINSTANCE m_hInstance;
+  LRESULT CALLBACK WndProc(HWND hWnd,
+                           UINT message,
+                           WPARAM wParam,
+                           LPARAM lParam);
+
+  int            m_style;
+  View *         m_contentView;
+
+  TCHAR          m_szWindowClass[50];
+  HWND           m_hWnd;
+  HINSTANCE      m_hInstance;
+  LPCWSTR        m_szTitle;
+
   const Window * m_self;
 };
 
