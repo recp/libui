@@ -22,23 +22,23 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   static const char * defaultClassName = "libui_def_wnd";
   memcpy(m_szWindowClass, defaultClassName, strlen(defaultClassName));
 
-  WNDCLASSEX wcex = {0};
- //  memset(&wcex, '\0', sizeof(wcex));
+  WNDCLASSEX wcex;
 
   wcex.cbSize = sizeof(WNDCLASSEX);
 
-  wcex.style = CS_HREDRAW | CS_VREDRAW;
-  wcex.lpfnWndProc = ::DefWindowProcW;
-  // wcex.lpfnWndProc = WndProc;
-  wcex.cbClsExtra = 0;
-  wcex.cbWndExtra = 0;
-  wcex.hInstance = m_hInstance;
-  // wcex.hIcon = 
-  wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wcex.style         = CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc   = ::DefWindowProcW; // TODO: will be replaced by custom
+ 
+  wcex.cbClsExtra    = 0;
+  wcex.cbWndExtra    = 0;
+  wcex.hInstance     = m_hInstance;
+  wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
-  // wcex.lpszMenuName = 
   wcex.lpszClassName = m_szWindowClass;
-  // wcex.hIconSm =
+
+  wcex.hIcon         = 0;
+  wcex.lpszMenuName  = 0;
+  wcex.hIconSm       = 0;
   
   RegisterClassEx(&wcex);
 
