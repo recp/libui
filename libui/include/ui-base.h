@@ -11,6 +11,9 @@
 typedef const char * CStringPtr;
 typedef char * CMutStringPtr;
 
+#define container_of(p, type, mem)                                 \
+    ((type *) ((unsigned char *)p - offsetof(type, mem)))
+
 /*
   The _libui_dll macro should not be defined in the client programs. 
   This is for exporting symbols for dynamic [link] library  
