@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-CMutStringPtr ui::utils::stringFromRect(const Rect& rect) {
+ui::CMutStringPtr ui::utils::stringFromRect(const Rect& rect) {
   int maxRectStrLen = 50;
   char * rectstr = (char *)calloc(sizeof(char) * maxRectStrLen, 1);
   sprintf(rectstr, "{{%.3f, %.3f}, {%.3f, %.3f}}",

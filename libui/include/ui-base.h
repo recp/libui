@@ -8,8 +8,12 @@
 #ifndef __libui__types__
 #define __libui__types__
 
+namespace ui {
+
 typedef const char * CStringPtr;
 typedef char * CMutStringPtr;
+
+}
 
 #define container_of(p, type, mem)                                 \
     ((type *) ((unsigned char *)p - offsetof(type, mem)))
