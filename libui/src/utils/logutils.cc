@@ -8,8 +8,10 @@
 #include "logutils.h"
 #include "../utils/utils.h"
 
-#include <cstdio>
-#include <varargs.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 
 void ui::debug::log(CStringPtr format, ...) {
   va_list arglist;

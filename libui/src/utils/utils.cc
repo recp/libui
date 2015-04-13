@@ -6,7 +6,8 @@
  */
 
 #include "utils.h"
-#include <string.h>
+
+#include <stdlib.h>
 #include <stdio.h>
 
 CMutStringPtr ui::utils::stringFromRect(const Rect& rect) {
