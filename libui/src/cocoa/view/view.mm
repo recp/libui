@@ -47,21 +47,6 @@
 
 @end
 
-ui::Rect::operator CGRect() {
-  return CGRectMake(this->origin.x,
-                    this->origin.y,
-                    this->size.width,
-                    this->size.height);
-}
-
-ui::Size::operator CGSize() {
-  return CGSizeMake(this->width, this->height);
-}
-
-ui::Point::operator CGPoint() {
-  return CGPointMake(this->x, this->y);
-}
-
 ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) : m_self(_self) {
   m_subviews = new std::vector<View *>();
   m_frame = rect;
