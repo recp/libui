@@ -27,8 +27,12 @@ public:
   CStringPtr title() const;
   void title(CStringPtr title) const;
 
-  std::vector<MenuItem *> menuItems() const;
+  std::vector<MenuItem *> * menuItems() const;
   void addSubview(MenuItem * menuItem) const;
+  
+private:
+  class MenuImpl;
+  MenuImpl * m_impl;
 };
 
 class _libui_export MenuItem {
@@ -50,6 +54,10 @@ public:
 
   bool enabled() const;
   void enabled(bool enabled);
+  
+private:
+  class MenuItemImpl;
+  MenuItemImpl * m_impl;
 };
 
 } // namespace ui
