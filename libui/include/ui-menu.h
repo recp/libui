@@ -13,6 +13,7 @@
 #include "ui-geometry.h"
 
 #include <vector>
+#include <functional>
 
 namespace ui {
 
@@ -37,8 +38,13 @@ private:
 
 class _libui_export MenuItem {
 public:
+  typedef std::function<void (MenuItem *)> MenuItemAction;
+  
   MenuItem();
   MenuItem(CStringPtr title);
+
+  MenuItem(MenuItemAction action);
+  MenuItem(MenuItemAction action, CStringPtr title);
 
   Menu * menu() const;
   Menu * subMenu() const;
@@ -55,6 +61,7 @@ public:
   bool enabled() const;
   void enabled(bool enabled);
   
+  void setAction(MenuItemAction action);
 private:
   class MenuItemImpl;
   MenuItemImpl * m_impl;
