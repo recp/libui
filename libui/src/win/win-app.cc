@@ -8,12 +8,15 @@
 #include "../config.h"
 #include "win-app.h"
 
-ui::AppImpl::AppImpl() {
+ui::App::AppImpl::AppImpl(App * _self) {
+  // force to create a default menubar menu
+  this->menuBarMenu(this->menuBarMenu());
 
+  m_self = _self;
 }
 
 void 
-ui::AppImpl::run() {
+ui::App::AppImpl::run() {
   MSG msg;
 
   /*
@@ -34,3 +37,24 @@ ui::AppImpl::run() {
 //void app::appimpl::run(window *rootwindow) {
 //
 //}
+
+ui::Menu *
+ui::App::AppImpl::menuBarMenu() {
+  if (!m_menuBarMenu)
+    m_menuBarMenu = new Menu;
+
+  return m_menuBarMenu;
+}
+
+void
+ui::App::AppImpl::menuBarMenu(Menu * menu) {
+  if (m_menuBarMenu && m_menuBarMenu != menu)
+    delete m_menuBarMenu;
+
+  m_menuBarMenu = menu;
+  // TODO:
+}
+
+ui::App::AppImpl::~AppImpl() {
+
+}

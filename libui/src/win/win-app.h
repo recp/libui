@@ -8,16 +8,25 @@
 #ifndef __libui_win_app__
 #define __libui_win_app__
 
+#include "../../include/ui-app.h"
+#include "../../include/ui-window.h"
+#include "../../include/ui-menu.h"
+
 namespace ui {
 
-class AppImpl {
+class App::AppImpl {
 public:
-  AppImpl();
+  AppImpl(App * _self);
   void run();
  //  void run(Window * rootWindow);
 
-private:
+  Menu * menuBarMenu();
+  void menuBarMenu(Menu * menu);
 
+  ~AppImpl();
+private:
+  Menu * m_menuBarMenu;
+  const App * m_self;
 };
 
 } // namespace ui

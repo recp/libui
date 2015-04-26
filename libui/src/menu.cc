@@ -10,7 +10,7 @@
 #ifdef __APPLE__
 #  include "cocoa/menu/menu.h"
 #elif _WIN32
-
+#  include "win/menu/win-menu.h"
 #endif
 
 ui::Menu::Menu() {
