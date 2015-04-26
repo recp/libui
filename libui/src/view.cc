@@ -19,31 +19,38 @@ ui::View::View(Rect rect) {
   m_impl = new ViewImpl(this, rect);
 }
 
-ui::Color ui::View::backgroundColor() const {
+ui::Color
+ui::View::backgroundColor() const {
   return m_impl->backgroundColor();
 }
 
-void ui::View::setBackgroundColor(Color color) const {
+void
+ui::View::setBackgroundColor(Color color) const {
   m_impl->setBackgroundColor(color);
 }
 
-ui::Rect ui::View::getFrame() const {
+ui::Rect
+ui::View::getFrame() const {
   return m_impl->getFrame();
 }
 
-void ui::View::setFrame(Rect frame) const {
+void
+ui::View::setFrame(Rect frame) const {
   m_impl->setFrame(frame);
 }
 
-void ui::View::addSubview(View *subview) const {
+void
+ui::View::addSubview(View *subview) const {
   m_impl->addSubview(subview);
 }
 
-void ui::View::removeFromSuperview() const {
+void
+ui::View::removeFromSuperview() const {
   m_impl->removeFromSuperview();
 }
 
-const ui::Window * ui::View::window() const {
+const ui::Window *
+ui::View::window() const {
   return m_impl->window();
 }
 

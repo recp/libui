@@ -12,7 +12,8 @@ ui::AppImpl::AppImpl() {
 
 }
 
-void ui::AppImpl::run() {
+void 
+ui::AppImpl::run() {
   MSG msg;
 
   /*

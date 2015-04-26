@@ -64,4 +64,3 @@ ui::Menu::MenuImpl::~MenuImpl() {
   [m_cocoaMenu removeAllItems];
   m_cocoaMenu = nil;
 }
-

@@ -59,23 +59,28 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) : m_self(_self) {
   m_view = [[CocoaView alloc] initWithFrame: _nsRect];
 }
 
-ui::Color ui::View::ViewImpl::backgroundColor() const {
+ui::Color
+ui::View::ViewImpl::backgroundColor() const {
   return m_bgcolor;
 }
 
-void ui::View::ViewImpl::setBackgroundColor(Color color) const {
+void
+ui::View::ViewImpl::setBackgroundColor(Color color) const {
   [m_view setBackgroundColor: color];
 }
 
-ui::Rect ui::View::ViewImpl::getFrame() const {
+ui::Rect
+ui::View::ViewImpl::getFrame() const {
   return m_frame;
 }
 
-void ui::View::ViewImpl::setFrame(Rect frame) const {
+void
+ui::View::ViewImpl::setFrame(Rect frame) const {
   [m_view setFrame: frame];
 }
 
-void ui::View::ViewImpl::addSubview(View *subview) const {
+void
+ui::View::ViewImpl::addSubview(View *subview) const {
   subview->m_impl->m_superview = const_cast<View *>(this->m_self);
 
   /* Because of isFlipped  */
@@ -91,11 +96,13 @@ void ui::View::ViewImpl::addSubview(View *subview) const {
   m_subviews->push_back(subview);
 }
 
-void ui::View::ViewImpl::removeFromSuperview() const {
+void
+ui::View::ViewImpl::removeFromSuperview() const {
   [m_view removeFromSuperview];
 }
 
-const ui::Window * ui::View::ViewImpl::window() const {
+const
+ui::Window * ui::View::ViewImpl::window() const {
   return m_wnd;
 }
 

@@ -20,19 +20,23 @@ ui::Window::Window(Rect rect, int style) {
   m_impl = new ui::Window::WindowImpl(this, rect, style);
 }
 
-void ui::Window::show() const {
+void
+ui::Window::show() const {
   m_impl->show();
 }
 
-void ui::Window::setTitle(const char *title) const {
+void
+ui::Window::setTitle(const char *title) const {
   m_impl->setTitle(title);
 }
 
-ui::View * ui::Window::contentView() const {
+ui::View *
+ui::Window::contentView() const {
   return m_impl->contentView();
 }
 
-void ui::Window::setContentView(ui::View *view)  const {
+void
+ui::Window::setContentView(ui::View *view) const {
   m_impl->setContentView(view);
 }
 

@@ -11,17 +11,16 @@
 #import <CoreGraphics/CGColorSpace.h>
 #import <CoreGraphics/CGColor.h>
 
- ui::Color::operator NSColor * () {
-   return [NSColor colorWithRed: this->red
-                          green: this->green
-                           blue: this->blue
-                          alpha: this->alpha];
- }
+ui::Color::operator NSColor * () {
+  return [NSColor colorWithRed: this->red
+                         green: this->green
+                          blue: this->blue
+                         alpha: this->alpha];
+}
 
- ui::Color::operator CGColorRef() {
-   return CGColorCreateGenericRGB(this->red,
-                                  this->green,
-                                  this->blue,
-                                  this->alpha);
- }
- 
+ui::Color::operator CGColorRef() {
+  return CGColorCreateGenericRGB(this->red,
+                                 this->green,
+                                 this->blue,
+                                 this->alpha);
+}

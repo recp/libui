@@ -13,7 +13,8 @@
 #include <string.h>
 #include <stdarg.h>
 
-void ui::debug::log(CStringPtr format, ...) {
+void
+ui::debug::log(CStringPtr format, ...) {
   va_list arglist;
   va_start(arglist, format);
 
@@ -33,7 +34,8 @@ void ui::debug::log(CStringPtr format, ...) {
   free(log_output);
 }
 
-void ui::debug::logt(CStringPtr tag, CStringPtr format, ...) {
+void
+ui::debug::logt(CStringPtr tag, CStringPtr format, ...) {
   va_list arglist;
   va_start(arglist, format);
 

@@ -72,7 +72,8 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   m_self = _self;
 }
 
-DWORD translateWndStyleToWin32WS(int style) {
+DWORD 
+translateWndStyleToWin32WS(int style) {
   DWORD winWS = 0L;
   if (style == ui::kWindowStyleDefault) {
     // it is same with WS_OVERLAPPEDWINDOW
@@ -147,21 +148,25 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
   return 0;
 }
 
-void ui::Window::WindowImpl::setTitle(const char *title) const {
+void 
+ui::Window::WindowImpl::setTitle(const char *title) const {
   // TODO: MultiByteToWideChar can be used for non-ansi strings
   ::SetWindowTextA(m_hWnd, title);
 }
 
-void ui::Window::WindowImpl::show() const {
+void 
+ui::Window::WindowImpl::show() const {
   ShowWindow(m_hWnd, 1);
   UpdateWindow(m_hWnd);
 }
 
-ui::View * ui::Window::WindowImpl::contentView() const {
+ui::View * 
+ui::Window::WindowImpl::contentView() const {
   return m_contentView;
 }
 
-void ui::Window::WindowImpl::setContentView(ui::View *view) {
+void 
+ui::Window::WindowImpl::setContentView(ui::View *view) {
 
 }
 

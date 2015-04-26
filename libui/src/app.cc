@@ -18,7 +18,8 @@ ui::App::App() {
   m_impl = new AppImpl(this);
 }
 
-void ui::App::run() const {
+void
+ui::App::run() const {
   m_impl->run();
 }
 
