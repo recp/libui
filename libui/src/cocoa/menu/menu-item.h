@@ -53,6 +53,10 @@ public:
 
   bool enabled() const;
   void enabled(bool enabled);
+
+  CStringPtr keyEquivalent() const;
+  void keyEquivalent(CStringPtr keyEquivalent);
+  
   void setAction(MenuItemAction action);
 
   ~MenuItemImpl();
@@ -63,6 +67,7 @@ private:
   bool m_enabled;
   Menu * m_menu;
   Menu * m_subMenu;
+  CStringPtr m_keyEquivalent;
   MenuItemAction m_menuItemAction;
   CocoaMenuItem * m_cocoaMenuItem;
   MenuItem * m_self;

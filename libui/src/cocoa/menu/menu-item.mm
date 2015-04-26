@@ -141,6 +141,24 @@ ui::MenuItem::MenuItemImpl::subMenu(Menu * menu) {
   [m_cocoaMenuItem setSubmenu: menu->m_impl->m_cocoaMenu];
 }
 
+ui::CStringPtr
+ui::MenuItem::MenuItemImpl::keyEquivalent() const {
+  return m_keyEquivalent;
+}
+
+void
+ui::MenuItem::MenuItemImpl::keyEquivalent(CStringPtr keyEquivalent) {
+  m_keyEquivalent = keyEquivalent;
+
+  if (!keyEquivalent)
+    m_keyEquivalent = "";
+
+  NSString * _nsKeyEq = [NSString stringWithCString: m_keyEquivalent
+                                           encoding: NSUTF8StringEncoding];
+
+  [m_cocoaMenuItem setKeyEquivalent: _nsKeyEq];
+}
+
 void
 ui::MenuItem::MenuItemImpl::setAction(MenuItemAction action) {
   m_menuItemAction = action;

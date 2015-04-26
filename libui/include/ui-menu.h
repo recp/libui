@@ -64,7 +64,10 @@ public:
 
   bool enabled() const;
   void enabled(bool enabled);
-  
+
+  CStringPtr keyEquivalent() const;
+  void keyEquivalent(CStringPtr keyEquivalent);
+
   void setAction(MenuItemAction action) const;
 
   ~MenuItem();

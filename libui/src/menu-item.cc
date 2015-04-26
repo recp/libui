@@ -84,6 +84,16 @@ ui::MenuItem::enabled(bool enabled) {
   m_impl->enabled(enabled);
 }
 
+ui::CStringPtr
+ui::MenuItem::keyEquivalent() const {
+  return m_impl->keyEquivalent();
+}
+
+void
+ui::MenuItem::keyEquivalent(CStringPtr keyEquivalent) {
+  m_impl->keyEquivalent(keyEquivalent);
+}
+
 void
 ui::MenuItem::setAction(MenuItemAction action) const {
   m_impl->setAction(action);
