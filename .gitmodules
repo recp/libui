@@ -1,0 +1,3 @@
+[submodule "libsig"]
+	path = libsig
+	url = https://github.com/recp/libsig.git
