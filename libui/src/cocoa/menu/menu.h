@@ -8,6 +8,15 @@
 #ifndef __libui__cocoa__menu__
 #define __libui__cocoa__menu__
 
+#include <objc/runtime.h>
+
+#ifdef __OBJC__
+#import <AppKit/NSMenu.h>
+#else
+typedef objc_object NSMenu;
+#endif
+
+#include "../../../include/ui-app.h"
 #include "../../../include/ui-menu.h"
 
 namespace ui {
@@ -21,11 +30,17 @@ public:
   void title(CStringPtr title);
   
   std::vector<MenuItem *> * menuItems() const;
-  void addSubview(MenuItem * menuItem) const;
+  void addMenuItem(MenuItem * menuItem);
+
+  ~MenuImpl();
 private:
   CStringPtr m_title;
+  NSMenu * m_cocoaMenu;
   std::vector<MenuItem *> * m_menuItems;
   const Menu * m_self;
+  friend class Menu;
+  friend class MenuItem;
+  friend class App;
 };
   
 } // namespace ui

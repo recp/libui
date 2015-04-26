@@ -10,16 +10,23 @@
 
 #include "ui-base.h"
 #include "ui-window.h"
+#include "ui-menu.h"
 
 namespace ui {
 
 class _libui_export App {
 public:
   App();
-  void run();
-  void run(Window * rootWindow);
+  void run() const;
+  void run(Window * rootWindow) const;
+
+  Menu * menuBarMenu() const;
+  void menuBarMenu(Menu * menu) const;
+
+  ~App();
 private:
-  class AppImpl * m_impl;
+  class AppImpl;
+  AppImpl * m_impl;
 };
 
 } // namespace ui

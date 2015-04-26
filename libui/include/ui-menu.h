@@ -11,13 +11,13 @@
 #include "ui-base.h"
 #include "ui-color.h"
 #include "ui-geometry.h"
+#include "ui-image.h"
 
 #include <vector>
 #include <functional>
 
 namespace ui {
 
-class _libui_export Image;
 class _libui_export MenuItem;
 
 class _libui_export Menu {
@@ -29,11 +29,14 @@ public:
   void title(CStringPtr title) const;
 
   std::vector<MenuItem *> * menuItems() const;
-  void addSubview(MenuItem * menuItem) const;
-  
+  void addMenuItem(MenuItem * menuItem);
+
+  ~Menu();
 private:
   class MenuImpl;
   MenuImpl * m_impl;
+  friend class MenuItem;
+  friend class App;
 };
 
 class _libui_export MenuItem {
@@ -44,10 +47,11 @@ public:
   MenuItem(CStringPtr title);
 
   MenuItem(MenuItemAction action);
-  MenuItem(MenuItemAction action, CStringPtr title);
+  MenuItem(CStringPtr title, MenuItemAction action);
 
   Menu * menu() const;
   Menu * subMenu() const;
+  void setSubMenu(Menu * menu) const;
 
   CStringPtr title() const;
   void title(CStringPtr title) const;
@@ -61,10 +65,13 @@ public:
   bool enabled() const;
   void enabled(bool enabled);
   
-  void setAction(MenuItemAction action);
+  void setAction(MenuItemAction action) const;
+
+  ~MenuItem();
 private:
   class MenuItemImpl;
   MenuItemImpl * m_impl;
+  friend class Menu;
 };
 
 } // namespace ui

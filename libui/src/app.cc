@@ -14,16 +14,28 @@
 # include "win/win-app.h"
 #endif
 
-namespace app = ui;
-
-app::App::App() {
-  m_impl = new AppImpl();
+ui::App::App() {
+  m_impl = new AppImpl(this);
 }
 
-void app::App::run() {
+void ui::App::run() const {
   m_impl->run();
+}
+
+ui::Menu *
+ui::App::menuBarMenu() const {
+  return m_impl->menuBarMenu();
+}
+
+void
+ui::App::menuBarMenu(Menu * menu) const {
+  m_impl->menuBarMenu(menu);
 }
 
 //void app::App::run(Window *rootWindow) {
 //  m_impl->run(rootWindow);
 //}
+
+ui::App::~App() {
+  delete m_impl;
+}

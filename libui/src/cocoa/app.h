@@ -8,30 +8,34 @@
 #ifndef __libui_cocoa_app__
 #define __libui_cocoa_app__
 
+#include <objc/runtime.h>
+
 #ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
+#import <AppKit/NSApplication.h>
+#else
+typedef objc_object NSApplication;
 #endif
 
+#include "../../include/ui-app.h"
 #include "../../include/ui-window.h"
-
-#ifdef __OBJC__
-@interface CocoaApp : NSObject
-- (void) run;
-@end
-#endif
+#include "../../include/ui-menu.h"
 
 namespace ui {
   
-class AppImpl {
+class App::AppImpl {
 public:
-  AppImpl();
+  AppImpl(App * _self);
   void run();
   void run(Window * rootWindow);
 
+  Menu * menuBarMenu();
+  void menuBarMenu(Menu * menu);
+
+  ~AppImpl();
 private:
-#ifdef __OBJC__
-  CocoaApp * m_app;
-#endif
+  NSApplication * m_cocoaApp;
+  Menu * m_menuBarMenu;
+  const App * m_self;
 };
 
 } // namespace ui
