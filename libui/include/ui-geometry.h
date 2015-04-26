@@ -24,7 +24,7 @@ enum CoordSystem2d {
   kCoordSystem2dRightTop,
   kCoordSystem2dRightBottom
 };
-  
+
 struct _libui_export Point {
   double x;
   double y;
@@ -34,7 +34,7 @@ struct _libui_export Point {
 
   bool operator==(const Point& p) const;
   bool operator==(const Point&& p) const;
-  
+
 #ifdef __OBJC__
   operator CGPoint  ();
 #endif
@@ -43,7 +43,7 @@ struct _libui_export Point {
 struct _libui_export Size {
   float width;
   float height;
-  
+
 #ifdef __OBJC__
   operator CGSize  ();
 #endif
@@ -53,11 +53,11 @@ struct _libui_export Vector {
   float dx;
   float dy;
 };
-  
+
 struct _libui_export Rect {
   Point origin;
   Size size;
-  
+
 #ifdef __OBJC__
   operator CGRect  ();
 #endif
