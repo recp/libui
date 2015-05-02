@@ -6,16 +6,10 @@
  */
 
 #include "win-window.h"
-#include <functional>
 
-#include <assert.h>
 #include "../../utils/logutils.h"
 #include "../../utils/utils.h"
 #include "../win-utils.h"
-
-#include <stdio.h>
-
-DWORD translateWndStyleToWin32WS(int style);
 
 ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   : m_self(_self) {
