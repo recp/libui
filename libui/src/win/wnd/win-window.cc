@@ -11,6 +11,7 @@
 #include <assert.h>
 #include "../../utils/logutils.h"
 #include "../../utils/utils.h"
+#include "../win-utils.h"
 
 #include <stdio.h>
 
@@ -51,7 +52,7 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   free(rectString);
 #endif
 
-  DWORD windowMask = translateWndStyleToWin32WS(style);
+  DWORD windowMask = ui::translateWndStyleToWin32WS(style);
   m_hWnd = CreateWindow(m_szWindowClass, 
                         m_szTitle, 
                         windowMask,
@@ -70,49 +71,6 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   }
 
   m_self = _self;
-}
-
-DWORD 
-translateWndStyleToWin32WS(int style) {
-  DWORD winWS = 0L;
-  if (style == ui::kWindowStyleDefault) {
-    // it is same with WS_OVERLAPPEDWINDOW
-    winWS = (WS_OVERLAPPED
-           | WS_CAPTION
-           | WS_SYSMENU
-           | WS_THICKFRAME
-           | WS_MINIMIZEBOX
-           | WS_MAXIMIZEBOX);
-
-    return winWS;
-  }
-
-  BOOL borderless = false;
-
-  if (style & ui::kWindowStyleBorderless) {
-    borderless = true;
-  } else {
-    winWS |= (WS_OVERLAPPED
-             | WS_CAPTION
-             | WS_SYSMENU);
-  }
-
-  if ((style & ui::kWindowStyleTitled) || !borderless)
-    winWS |= WS_CAPTION;
-
-  if (style & ui::kWindowStyleFullscreen)
-    winWS |= WS_MAXIMIZE;
-
-  //if (style & ui::kWindowStyleCloseButton)
-  // winWS |= ? See window class style
-
-  if (style & ui::kWindowStyleMaximizeButton)
-    winWS |= WS_MAXIMIZEBOX;
-
-  if (style & ui::kWindowStyleMinimizeButton)
-    winWS |= WS_MINIMIZEBOX;
-
-  return winWS;
 }
 
 LRESULT CALLBACK 
