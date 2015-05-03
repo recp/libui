@@ -25,7 +25,7 @@ public:
   void setBackgroundColor(Color color) const;
 
   Rect getFrame() const;
-  void setFrame(Rect frame) const;
+  void setFrame(Rect frame);
 
   void addSubview(View * subview) const;
   void removeFromSuperview() const;

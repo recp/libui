@@ -118,8 +118,16 @@ ui::View::ViewImpl::getFrame() const {
 }
 
 void 
-ui::View::ViewImpl::setFrame(Rect frame) const {
+ui::View::ViewImpl::setFrame(Rect frame) {
+  m_frame = frame;
 
+  SetWindowPos(m_hWnd, 
+               NULL, 
+               frame.origin.x,
+               frame.origin.y,
+               frame.size.width,
+               frame.size.height,
+               SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 }
 
 void 
