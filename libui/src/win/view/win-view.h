@@ -22,7 +22,7 @@ public:
   ViewImpl(View * _self, Rect rect);
 
   Color backgroundColor() const;
-  void setBackgroundColor(Color color) const;
+  void setBackgroundColor(Color color);
 
   Rect getFrame() const;
   void setFrame(Rect frame);

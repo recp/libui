@@ -11,6 +11,8 @@
 #include "../../utils/utils.h"
 #include "../win-utils.h"
 
+#include <algorithm>
+
 ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) 
   : m_self(_self) {
 
@@ -108,8 +110,8 @@ ui::View::ViewImpl::backgroundColor() const {
 }
 
 void 
-ui::View::ViewImpl::setBackgroundColor(Color color) const {
-
+ui::View::ViewImpl::setBackgroundColor(Color color) {
+  m_bgcolor = color;
 }
 
 ui::Rect 
@@ -132,13 +134,29 @@ ui::View::ViewImpl::setFrame(Rect frame) {
 
 void 
 ui::View::ViewImpl::addSubview(View *subview) const {
- 
+  subview->m_impl->m_superview = const_cast<View *>(this->m_self);
+
+  SetParent(subview->m_impl->m_hWnd, m_hWnd);
+  ShowWindow(subview->m_impl->m_hWnd, SW_SHOWNORMAL);
+  UpdateWindow(subview->m_impl->m_hWnd);
+
+  m_subviews->push_back(subview);
 }
 
 void 
 ui::View::ViewImpl::removeFromSuperview() const {
+  ShowWindow(m_hWnd, SW_HIDE);
+  View * _self = const_cast<View * >(m_self);
 
-}
+  std::vector<View *>::iterator it =
+    std::find(m_superview->m_impl->m_subviews->begin(),
+              m_superview->m_impl->m_subviews->end(), 
+              _self);
+
+  if (it != m_superview->m_impl->m_subviews->end()) {
+    m_superview->m_impl->m_subviews->erase(it);
+  }
+};
 
 const ui::Window * 
 ui::View::ViewImpl::window() const {
