@@ -13,8 +13,8 @@
 
 namespace ui {
 
-DWORD 
-translateWndStyleToWin32WS(int style);
+HWND defaultFakeWindow();
+DWORD translateWndStyleToWin32WS(int style);
 
 } // namespace ui
 

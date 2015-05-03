@@ -6,6 +6,7 @@
  */
 
 #include "win-window.h"
+#include "../view/win-view.h"
 
 #include "../../utils/logutils.h"
 #include "../../utils/utils.h"
@@ -77,6 +78,9 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
   HDC hdc;
 
   switch (message) {
+  case WM_CREATE:
+
+    break;
   case WM_COMMAND:
     wmId = LOWORD(wParam);
     wmEvent = HIWORD(wParam);
@@ -119,7 +123,10 @@ ui::Window::WindowImpl::contentView() const {
 
 void 
 ui::Window::WindowImpl::setContentView(ui::View *view) {
+  SetParent(view->m_impl->m_hWnd, m_hWnd);
 
+  ShowWindow(view->m_impl->m_hWnd, 1);
+  UpdateWindow(view->m_impl->m_hWnd);
 }
 
 ui::Window::WindowImpl::~WindowImpl() {
