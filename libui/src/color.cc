@@ -25,15 +25,31 @@ ui::Color::Color(const char * hexColor)
     
 }
 
-const ui::Color&
+ui::Color&
 ui::Color::operator = (const Color& color) {
-  return color;
-//  return Color(color.red, color.green, color.blue, color.alpha);
+  if (this != &color) {
+    this->red = color.red;
+    this->green = color.green;
+    this->blue = color.blue;
+  }
+
+  return *this;
 }
 
-ui::Color ui::Color::clearColor()   { return ui::Color(0.0, 0.0, 0.0, 0.0); }
-ui::Color ui::Color::blackColor()   { return ui::Color(0.0, 0.0, 0.0, 1.0); }
-ui::Color ui::Color::whiteColor()   { return ui::Color(1.0, 1.0, 1.0, 1.0); }
+const ui::Color 
+ui::Color::clearColor() { 
+  return ui::Color(0.0, 0.0, 0.0, 0.0); 
+}
+
+const ui::Color 
+ui::Color::blackColor() { 
+  return ui::Color(0.0, 0.0, 0.0, 1.0); 
+}
+
+const ui::Color 
+ui::Color::whiteColor() { 
+  return ui::Color(1.0, 1.0, 1.0, 1.0); 
+}
 
 //CG_EXTERN CGColorRef CGColorCreate(CGColorSpaceRef space,
 //                                   const CGFloat components[]) CG_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);

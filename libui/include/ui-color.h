@@ -18,26 +18,26 @@ typedef struct CGColor * CGColorRef;
 namespace ui {
 
 struct _libui_export Color {
-  const float red;
-  const float green;
-  const float blue;
-  const float alpha;
+  float red;
+  float green;
+  float blue;
+  float alpha;
 
   Color(const Color& color);
   Color(float r = .0f, float g = .0f, float b = .0f, float a = 1.0f);
 
   Color(const char * hexColor);
 
-  const Color& operator = (const Color& color);
+  Color& operator = (const Color& color);
   
 #ifdef __OBJC__
   operator NSColor *  ();;
   operator CGColorRef ();
 #endif
   
-  static Color blackColor();
-  static Color whiteColor();
-  static Color clearColor();
+  static const Color blackColor();
+  static const Color whiteColor();
+  static const Color clearColor();
 };
 
 }
