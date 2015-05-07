@@ -42,7 +42,7 @@ private:
   Window * m_wnd;
 
   static LRESULT CALLBACK WndProc(HWND hWnd,
-                                  UINT message,
+                                  UINT uMsg,
                                   WPARAM wParam,
                                   LPARAM lParam);
 

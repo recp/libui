@@ -33,7 +33,7 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
   wcex.lpfnWndProc   = ViewImpl::WndProc;
   wcex.hInstance     = m_hInstance;
   wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
-  wcex.hbrBackground = (HBRUSH)(COLOR_GRAYTEXT);
+  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
   wcex.lpszClassName = m_szWindowClass;
   wcex.cbClsExtra    = 0;
   wcex.cbWndExtra    = 0;
@@ -61,7 +61,7 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
                         hParentWnd, 
                         NULL,
                         m_hInstance, 
-                        NULL);
+                        this);
 
   if (!m_hWnd) {
     debug::logt("win:view", "couldnt create window, last err: %d", 
@@ -71,14 +71,24 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
 
 LRESULT CALLBACK 
 ui::View::ViewImpl::WndProc(HWND hWnd, 
-                            UINT message, 
+                            UINT uMsg, 
                             WPARAM wParam, 
                             LPARAM lParam) {
   int wmId, wmEvent;
   PAINTSTRUCT ps;
   HDC hdc;
 
-  switch (message) {
+  ViewImpl * viewImpl = NULL;
+  if (uMsg == WM_CREATE) {
+    CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT *>(lParam);
+    viewImpl = reinterpret_cast<ViewImpl *>(pCreate->lpCreateParams);
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)viewImpl);
+  } else {
+    LONG_PTR ptr = GetWindowLongPtr(hWnd, GWLP_USERDATA);
+    viewImpl = reinterpret_cast<ViewImpl *>(ptr);
+  }
+
+  switch (uMsg) {
   case WM_CREATE:
     break;
   case WM_COMMAND:
@@ -86,19 +96,26 @@ ui::View::ViewImpl::WndProc(HWND hWnd,
     wmEvent = HIWORD(wParam);
     switch (wmId) {
     default:
-      return DefWindowProc(hWnd, message, wParam, lParam);
+      return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
     break;
-  case WM_PAINT:
+  case WM_PAINT: {
     hdc = BeginPaint(hWnd, &ps);
+   
+    Color bgColor = viewImpl->backgroundColor();
+    HBRUSH brush = CreateSolidBrush(bgColor);
+
+    FillRect(hdc, &ps.rcPaint, brush);
+    DeleteObject(brush);
 
     EndPaint(hWnd, &ps);
     break;
+  }
   case WM_DESTROY:
     PostQuitMessage(0);
     break;
   default:
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
   }
 
   return 0;
@@ -112,6 +129,7 @@ ui::View::ViewImpl::backgroundColor() const {
 void 
 ui::View::ViewImpl::setBackgroundColor(Color color) {
   m_bgcolor = color;
+  UpdateWindow(m_hWnd);
 }
 
 ui::Rect 
