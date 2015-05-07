@@ -13,6 +13,8 @@
 #ifdef __OBJC__
 @class NSColor;
 typedef struct CGColor * CGColorRef;
+#elif defined(_WIN32) || defined(WIN32)
+typedef unsigned long COLORREF;
 #endif
 
 namespace ui {
@@ -33,6 +35,8 @@ struct _libui_export Color {
 #ifdef __OBJC__
   operator NSColor *  ();;
   operator CGColorRef ();
+#elif defined(_WIN32) || defined(WIN32)
+  operator COLORREF ();
 #endif
   
   static const Color blackColor();
