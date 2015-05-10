@@ -308,6 +308,12 @@ ui::View::ViewImpl::isHidden() const {
   return !(bool)IsWindowVisible(m_hWnd);
 }
 
+void 
+ui::View::ViewImpl::forceRedraw() const {
+  InvalidateRect(m_hWnd, NULL, true);
+  UpdateWindow(m_hWnd);
+}
+
 ui::View::ViewImpl::~ViewImpl() {
   m_subviews->clear();
   delete m_subviews;

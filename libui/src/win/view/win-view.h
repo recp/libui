@@ -43,6 +43,7 @@ public:
   void setHidden(bool isHidden);
   bool isHidden() const;
 
+  void forceRedraw() const;
   ~ViewImpl();
 private:
   Rect m_frame;

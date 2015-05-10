@@ -94,6 +94,11 @@ ui::View::isHidden() const {
   return m_impl->isHidden();
 }
 
+void 
+ui::View::forceRedraw() const {
+  m_impl->forceRedraw();
+}
+
 ui::View::~View() {
   delete m_impl;
 }

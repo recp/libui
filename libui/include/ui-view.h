@@ -52,8 +52,9 @@ public:
   void layoutIfNeeded() const;
   
   void layoutSubviews() const;
-  
-  //
+
+  void forceRedraw() const;
+
   void setHidden(bool isHidden) const;
   bool isHidden() const;
   
