@@ -35,8 +35,8 @@ public:
   const Window * window() const;
   
   // TODO:
-  void layer();
-  void transform();
+  //void layer();
+  //void transform();
   
   // View Hierarchy
   std::vector<View *> * subviews() const;
@@ -48,10 +48,10 @@ public:
   void bringSubviewToFront(View * view) const;
   void sendSubviewToBack(View * view) const;
   
-  void setNeedsLayout() const;
-  void layoutIfNeeded() const;
-  
-  void layoutSubviews() const;
+  //void setNeedsLayout() const;
+  //void layoutIfNeeded() const;
+  //
+  //void layoutSubviews() const;
 
   void forceRedraw() const;
 
