@@ -31,6 +31,7 @@ public:
   bool isInputEnabled() const;
   void setInputEnabled(bool enabled) const;
   
+  const View * superview() const;
   const Window * window() const;
   
   // TODO:

@@ -216,7 +216,14 @@ ui::View::ViewImpl::removeFromSuperview() {
   for (; subview_it != m_subviews->end(); subview_it++) {
     (*subview_it)->m_impl->m_wnd = nullptr;
   }
+
+  m_superview = nullptr;
 };
+
+const ui::View * 
+ui::View::ViewImpl::superview() const {
+  return m_superview;
+}
 
 const ui::Window * 
 ui::View::ViewImpl::window() const {

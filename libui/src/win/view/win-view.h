@@ -30,6 +30,7 @@ public:
   bool isInputEnabled() const;
   void setInputEnabled(bool enabled);
 
+  const View * superview() const;
   const Window * window() const;
 
   std::vector<ui::View *> * subviews() const;

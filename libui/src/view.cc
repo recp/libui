@@ -49,6 +49,11 @@ ui::View::setInputEnabled(bool enabled) const {
   m_impl->setInputEnabled(enabled);
 }
 
+const ui::View * 
+ui::View::superview() const {
+  return m_impl->superview();
+}
+
 const ui::Window *
 ui::View::window() const {
   return m_impl->window();
