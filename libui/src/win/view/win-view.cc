@@ -152,29 +152,57 @@ ui::View::ViewImpl::setFrame(Rect frame) {
                SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 }
 
-void 
-ui::View::ViewImpl::addSubview(View *subview) const {
-  subview->m_impl->m_superview = const_cast<View *>(this->m_self);
+std::vector<ui::View *> *
+ui::View::ViewImpl::subviews() const {
+  return m_subviews;
+}
 
-  SetParent(subview->m_impl->m_hWnd, m_hWnd);
-  ShowWindow(subview->m_impl->m_hWnd, SW_SHOWNORMAL);
-  UpdateWindow(subview->m_impl->m_hWnd);
+void 
+ui::View::ViewImpl::addSubview(View *subview) {
+  subview->removeFromSuperview();
+
+  ViewImpl * subviewImpl = subview->m_impl;
+
+  subviewImpl->m_superview = const_cast<View *>(this->m_self);
+  subviewImpl->m_wnd = m_wnd;
+
+  SetParent(subviewImpl->m_hWnd, m_hWnd);
+  ShowWindow(subviewImpl->m_hWnd, SW_SHOWNORMAL);
+  UpdateWindow(subviewImpl->m_hWnd);
+
+  // Update all subviews' window ptr
+  std::vector<View *>::iterator subview_it = 
+    subviewImpl->m_subviews->begin();
+  for (; subview_it != subviewImpl->m_subviews->end(); subview_it++) {
+    (*subview_it)->m_impl->m_wnd = m_wnd;
+  }
 
   m_subviews->push_back(subview);
 }
 
 void 
-ui::View::ViewImpl::removeFromSuperview() const {
+ui::View::ViewImpl::removeFromSuperview() {
+  if (!m_superview)
+    return;
+
   ShowWindow(m_hWnd, SW_HIDE);
   View * _self = const_cast<View * >(m_self);
+ 
+  ViewImpl * superviewImpl = m_superview->m_impl;
 
-  std::vector<View *>::iterator it =
-    std::find(m_superview->m_impl->m_subviews->begin(),
-              m_superview->m_impl->m_subviews->end(), 
+  std::vector<View *>::iterator fountView_it =
+    std::find(superviewImpl->m_subviews->begin(),
+              superviewImpl->m_subviews->end(), 
               _self);
 
-  if (it != m_superview->m_impl->m_subviews->end()) {
-    m_superview->m_impl->m_subviews->erase(it);
+  if (fountView_it != superviewImpl->m_subviews->end()) {
+    superviewImpl->m_subviews->erase(fountView_it);
+  }
+
+  // Update all subviews' window ptr
+  std::vector<View *>::iterator subview_it = m_subviews->begin();
+  for (; subview_it != m_subviews->end(); subview_it++) {
+    (*subview_it)->m_impl->m_wnd = nullptr;
   }
 };
 

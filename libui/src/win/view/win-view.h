@@ -27,8 +27,9 @@ public:
   Rect getFrame() const;
   void setFrame(Rect frame);
 
-  void addSubview(View * subview) const;
-  void removeFromSuperview() const;
+  std::vector<ui::View *> * subviews() const;
+  void addSubview(View * subview);
+  void removeFromSuperview();
 
   const Window * window() const;
 

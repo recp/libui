@@ -38,7 +38,7 @@ public:
   void transform();
   
   // View Hierarchy
-  std::vector<View *> subviews() const;
+  std::vector<View *> * subviews() const;
   void addSubview(View * subview) const;
   
   // Alternative names: popView();, pop();

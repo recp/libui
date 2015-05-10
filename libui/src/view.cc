@@ -39,6 +39,11 @@ ui::View::setFrame(Rect frame) const {
   m_impl->setFrame(frame);
 }
 
+std::vector<ui::View *> *
+ui::View::subviews() const {
+  return m_impl->subviews();
+}
+
 void
 ui::View::addSubview(View *subview) const {
   m_impl->addSubview(subview);

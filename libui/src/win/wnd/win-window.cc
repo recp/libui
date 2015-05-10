@@ -122,11 +122,13 @@ ui::Window::WindowImpl::contentView() const {
 }
 
 void 
-ui::Window::WindowImpl::setContentView(ui::View *view) {
+ui::Window::WindowImpl::setContentView(ui::View * view) {
   SetParent(view->m_impl->m_hWnd, m_hWnd);
 
   ShowWindow(view->m_impl->m_hWnd, 1);
   UpdateWindow(view->m_impl->m_hWnd);
+
+  view->m_impl->m_wnd = const_cast<Window *>(m_self);
 }
 
 ui::Window::WindowImpl::~WindowImpl() {
