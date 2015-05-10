@@ -214,6 +214,56 @@ ui::View::ViewImpl::window() const {
 }
 
 void 
+ui::View::ViewImpl::bringSubviewToFront(View * view) const {
+  ViewImpl * viewImpl = view->m_impl;
+    
+  if (m_subviews->size() <= 0)
+    return;
+
+  ViewImpl * topView = m_subviews->front()->m_impl;
+
+  SetWindowPos(viewImpl->m_hWnd, 
+               topView->m_hWnd, 
+               viewImpl->m_frame.origin.x,
+               viewImpl->m_frame.origin.y,
+               viewImpl->m_frame.size.width,
+               viewImpl->m_frame.size.height,
+               SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
+
+  // TODO: Do we really need to update the parent wnd?
+  InvalidateRect(m_hWnd, NULL, true);
+  UpdateWindow(m_hWnd);
+
+  // change z-order in vactor for next 
+  std::swap(m_subviews->front(), view);
+}
+
+void 
+ui::View::ViewImpl::sendSubviewToBack(View * view) const {
+  ViewImpl * viewImpl = view->m_impl;
+  
+  if (m_subviews->size() <= 0)
+    return;
+
+  ViewImpl * backView = m_subviews->back()->m_impl;
+
+  SetWindowPos(viewImpl->m_hWnd,
+               NULL,
+               viewImpl->m_frame.origin.x,
+               viewImpl->m_frame.origin.y,
+               viewImpl->m_frame.size.width,
+               viewImpl->m_frame.size.height,
+               SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
+
+  // TODO: Do we really need to update the parent wnd?
+  InvalidateRect(m_hWnd, NULL, true);
+  UpdateWindow(m_hWnd);
+
+  // change z-order in vactor for next 
+  std::swap(m_subviews->back(), view);
+}
+
+void 
 ui::View::ViewImpl::setHidden(bool isHidden) {
   if (isHidden) {
     ShowWindow(m_hWnd, SW_HIDE);

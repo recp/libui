@@ -33,6 +33,9 @@ public:
 
   const Window * window() const;
 
+  void bringSubviewToFront(View * view) const;
+  void sendSubviewToBack(View * view) const;
+
   void setHidden(bool isHidden);
   bool isHidden() const;
 

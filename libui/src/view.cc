@@ -60,6 +60,16 @@ ui::View::window() const {
 }
 
 void 
+ui::View::bringSubviewToFront(View * view) const {
+  m_impl->bringSubviewToFront(view);
+}
+
+void 
+ui::View::sendSubviewToBack(View * view) const {
+  m_impl->sendSubviewToBack(view);
+}
+
+void 
 ui::View::setHidden(bool isHidden) const {
   m_impl->setHidden(isHidden);
 }
