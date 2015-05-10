@@ -129,6 +129,8 @@ ui::View::ViewImpl::backgroundColor() const {
 void 
 ui::View::ViewImpl::setBackgroundColor(Color color) {
   m_bgcolor = color;
+
+  InvalidateRect(m_hWnd, NULL, TRUE);
   UpdateWindow(m_hWnd);
 }
 
