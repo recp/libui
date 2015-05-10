@@ -59,6 +59,16 @@ ui::View::window() const {
   return m_impl->window();
 }
 
+void 
+ui::View::setHidden(bool isHidden) const {
+  m_impl->setHidden(isHidden);
+}
+  
+bool 
+ui::View::isHidden() const {
+  return m_impl->isHidden();
+}
+
 ui::View::~View() {
   delete m_impl;
 }

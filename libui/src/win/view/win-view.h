@@ -33,6 +33,9 @@ public:
 
   const Window * window() const;
 
+  void setHidden(bool isHidden);
+  bool isHidden() const;
+
   ~ViewImpl();
 private:
   Rect m_frame;

@@ -186,6 +186,8 @@ ui::View::ViewImpl::removeFromSuperview() {
     return;
 
   ShowWindow(m_hWnd, SW_HIDE);
+  UpdateWindow(m_hWnd);
+
   View * _self = const_cast<View * >(m_self);
  
   ViewImpl * superviewImpl = m_superview->m_impl;
@@ -209,6 +211,23 @@ ui::View::ViewImpl::removeFromSuperview() {
 const ui::Window * 
 ui::View::ViewImpl::window() const {
   return m_wnd;
+}
+
+void 
+ui::View::ViewImpl::setHidden(bool isHidden) {
+  if (isHidden) {
+    ShowWindow(m_hWnd, SW_HIDE);
+    UpdateWindow(m_hWnd);
+    return;
+  }
+
+  ShowWindow(m_hWnd, SW_SHOWNORMAL);
+  UpdateWindow(m_hWnd);
+}
+  
+bool 
+ui::View::ViewImpl::isHidden() const {
+  return !(bool)IsWindowVisible(m_hWnd);
 }
 
 ui::View::ViewImpl::~ViewImpl() {
