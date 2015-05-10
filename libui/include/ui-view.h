@@ -28,8 +28,8 @@ public:
   Rect getFrame() const;
   void setFrame(Rect frame) const;
   
-  bool userInteractionEnabled() const;
-  void setUserInteractionEnabled(bool) const;
+  bool isInputEnabled() const;
+  void setInputEnabled(bool enabled) const;
   
   const Window * window() const;
   

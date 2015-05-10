@@ -152,6 +152,16 @@ ui::View::ViewImpl::setFrame(Rect frame) {
                SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 }
 
+bool 
+ui::View::ViewImpl::isInputEnabled() const {
+  return IsWindowEnabled(m_hWnd);
+}
+
+void 
+ui::View::ViewImpl::setInputEnabled(bool enabled) {
+  EnableWindow(m_hWnd, enabled);
+}
+
 std::vector<ui::View *> *
 ui::View::ViewImpl::subviews() const {
   return m_subviews;

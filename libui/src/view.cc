@@ -39,6 +39,21 @@ ui::View::setFrame(Rect frame) const {
   m_impl->setFrame(frame);
 }
 
+bool 
+ui::View::isInputEnabled() const {
+  return m_impl->isInputEnabled();
+}
+
+void 
+ui::View::setInputEnabled(bool enabled) const {
+  m_impl->setInputEnabled(enabled);
+}
+
+const ui::Window *
+ui::View::window() const {
+  return m_impl->window();
+}
+
 std::vector<ui::View *> *
 ui::View::subviews() const {
   return m_impl->subviews();
@@ -52,11 +67,6 @@ ui::View::addSubview(View *subview) const {
 void
 ui::View::removeFromSuperview() const {
   m_impl->removeFromSuperview();
-}
-
-const ui::Window *
-ui::View::window() const {
-  return m_impl->window();
 }
 
 void 

@@ -27,11 +27,14 @@ public:
   Rect getFrame() const;
   void setFrame(Rect frame);
 
+  bool isInputEnabled() const;
+  void setInputEnabled(bool enabled);
+
+  const Window * window() const;
+
   std::vector<ui::View *> * subviews() const;
   void addSubview(View * subview);
   void removeFromSuperview();
-
-  const Window * window() const;
 
   void bringSubviewToFront(View * view) const;
   void sendSubviewToBack(View * view) const;
