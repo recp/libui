@@ -79,6 +79,26 @@ ui::View::ViewImpl::setFrame(Rect frame) const {
   [m_view setFrame: frame];
 }
 
+bool
+ui::View::ViewImpl::isInputEnabled() const {
+  return m_inputEnabled;
+}
+
+void
+ui::View::ViewImpl::setInputEnabled(bool enabled) {
+  m_inputEnabled = enabled;
+}
+
+const ui::View *
+ui::View::ViewImpl::superview() const {
+  return m_superview;
+}
+
+const ui::Window *
+ui::View::ViewImpl::window() const {
+  return m_wnd;
+}
+
 void
 ui::View::ViewImpl::addSubview(View *subview) const {
   subview->m_impl->m_superview = const_cast<View *>(this->m_self);

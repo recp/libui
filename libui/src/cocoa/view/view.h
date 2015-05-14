@@ -40,20 +40,26 @@ public:
   
   Rect getFrame() const;
   void setFrame(Rect frame) const;
-  
+
+  bool isInputEnabled() const;
+  void setInputEnabled(bool enabled);
+
+  const View * superview() const;
+  const Window * window() const;
+
   void addSubview(View * subview) const;
   void removeFromSuperview() const;
   
-  const Window * window() const;
-  
   ~ViewImpl();
 private:
+  bool m_inputEnabled;
   Rect m_frame;
   Color m_bgcolor;
   CocoaView * m_view;
   std::vector<View *> * m_subviews;
   View * m_superview;
   Window * m_wnd;
+
   const View * m_self;
   friend class Window;
   friend class View;
