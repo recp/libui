@@ -121,11 +121,6 @@ ui::View::ViewImpl::removeFromSuperview() const {
   [m_view removeFromSuperview];
 }
 
-const
-ui::Window * ui::View::ViewImpl::window() const {
-  return m_wnd;
-}
-
 ui::View::ViewImpl::~ViewImpl() {
   m_subviews->clear();
   delete m_subviews;
