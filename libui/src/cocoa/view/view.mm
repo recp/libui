@@ -99,26 +99,62 @@ ui::View::ViewImpl::window() const {
   return m_wnd;
 }
 
+std::vector<ui::View *> *
+ui::View::ViewImpl::subviews() const {
+  return m_subviews;
+}
+
 void
-ui::View::ViewImpl::addSubview(View *subview) const {
-  subview->m_impl->m_superview = const_cast<View *>(this->m_self);
+ui::View::ViewImpl::addSubview(View *subview) {
+  subview->removeFromSuperview();
 
-  /* Because of isFlipped  */
-//  Rect selfFrame = this->getFrame();
-//  Rect subviewFrame = subview->getFrame();
+  ViewImpl * subviewImpl = subview->m_impl;
 
-//  double originY = selfFrame.size.height - subviewFrame.size.height - subviewFrame.origin.y;
-//  subviewFrame.origin.y = originY;
+  subviewImpl->m_superview = const_cast<View *>(this->m_self);
+  subviewImpl->m_wnd = m_wnd;
 
   subview->setFrame(subview->getFrame());
 
-  [m_view addSubview: subview->m_impl->m_view];
+  [m_view addSubview: subviewImpl->m_view];
+  m_subviews->push_back(subview);
+
+  // Update all subviews' window ptr
+  std::vector<View *>::iterator subview_it =
+  subviewImpl->m_subviews->begin();
+  for (; subview_it != subviewImpl->m_subviews->end(); subview_it++) {
+    (*subview_it)->m_impl->m_wnd = m_wnd;
+  }
+
   m_subviews->push_back(subview);
 }
 
 void
-ui::View::ViewImpl::removeFromSuperview() const {
+ui::View::ViewImpl::removeFromSuperview() {
+  if (!m_superview)
+    return;
+
   [m_view removeFromSuperview];
+
+  View * _self = const_cast<View * >(m_self);
+
+  ViewImpl * superviewImpl = m_superview->m_impl;
+
+  std::vector<View *>::iterator fountView_it =
+  std::find(superviewImpl->m_subviews->begin(),
+            superviewImpl->m_subviews->end(),
+            _self);
+
+  if (fountView_it != superviewImpl->m_s	ubviews->end()) {
+    superviewImpl->m_subviews->erase(fountView_it);
+  }
+
+  // Update all subviews' window ptr
+  std::vector<View *>::iterator subview_it = m_subviews->begin();
+  for (; subview_it != m_subviews->end(); subview_it++) {
+    (*subview_it)->m_impl->m_wnd = nullptr;
+  }
+
+  m_superview = nullptr;
 }
 
 ui::View::ViewImpl::~ViewImpl() {

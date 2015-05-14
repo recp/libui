@@ -47,8 +47,9 @@ public:
   const View * superview() const;
   const Window * window() const;
 
-  void addSubview(View * subview) const;
-  void removeFromSuperview() const;
+  std::vector<View *> * subviews() const;
+  void addSubview(View * subview);
+  void removeFromSuperview();
   
   ~ViewImpl();
 private:
