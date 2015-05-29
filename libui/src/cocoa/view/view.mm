@@ -116,7 +116,6 @@ ui::View::ViewImpl::addSubview(View *subview) {
   subview->setFrame(subview->getFrame());
 
   [m_view addSubview: subviewImpl->m_view];
-  m_subviews->push_back(subview);
 
   // Update all subviews' window ptr
   std::vector<View *>::iterator subview_it =
@@ -144,7 +143,7 @@ ui::View::ViewImpl::removeFromSuperview() {
             superviewImpl->m_subviews->end(),
             _self);
 
-  if (fountView_it != superviewImpl->m_s	ubviews->end()) {
+  if (fountView_it != superviewImpl->m_subviews->end()) {
     superviewImpl->m_subviews->erase(fountView_it);
   }
 
@@ -155,6 +154,84 @@ ui::View::ViewImpl::removeFromSuperview() {
   }
 
   m_superview = nullptr;
+}
+
+NSComparisonResult
+ui::View::ViewImpl::viewSiblingViewsCmp(__strong id v1,
+                                        __strong id v2,
+                                        void * context) {
+
+  CocoaView * _v1 = static_cast<CocoaView *>(v1);
+  CocoaView * _v2 = static_cast<CocoaView *>(v2);
+
+  if (_v1.zIndex > _v2.zIndex)
+    return NSOrderedDescending;
+  else if (_v1.zIndex < _v2.zIndex)
+    return NSOrderedAscending;
+
+  return NSOrderedSame;
+}
+
+void
+ui::View::ViewImpl::bringSubviewToFront(View * view) {
+  ViewImpl * viewImpl = view->m_impl;
+
+  std::vector<View *>::iterator fountView_it =
+  std::find(m_subviews->begin(),
+            m_subviews->end(),
+            view);
+
+  if (fountView_it == m_subviews->end())
+    return;
+
+  // change z-order in vactor for next
+  m_subviews->erase(fountView_it);
+  m_subviews->push_back(view);
+
+  for (int i = 0; i < m_subviews->size(); i++) {
+    View * aView = m_subviews->at(i);
+    aView->m_impl->setZIndex(i);
+  }
+
+  [m_view sortSubviewsUsingFunction: ViewImpl::viewSiblingViewsCmp
+                            context: (void *)viewImpl];
+}
+
+void
+ui::View::ViewImpl::sendSubviewToBack(View * view) {
+  ViewImpl * viewImpl = view->m_impl;
+//  viewImpl->setZIndex(0);
+
+  std::vector<View *>::iterator fountView_it =
+  std::find(m_subviews->begin(),
+            m_subviews->end(),
+            view);
+
+  if (fountView_it == m_subviews->end())
+    return;
+
+  // change z-order in vactor for next
+  m_subviews->erase(fountView_it);
+  m_subviews->insert(m_subviews->begin(), view);
+
+  for (int i = 0; i < m_subviews->size(); i++) {
+    View * aView = m_subviews->at(i);
+    aView->m_impl->setZIndex(i);
+  }
+
+  [m_view sortSubviewsUsingFunction: ViewImpl::viewSiblingViewsCmp
+                            context: (void *)viewImpl];
+}
+
+int
+ui::View::ViewImpl::zIndex() const {
+  return m_zIndex;
+}
+
+void
+ui::View::ViewImpl::setZIndex(int zIndex) {
+  m_zIndex = zIndex;
+  [m_view setZIndex: zIndex];
 }
 
 ui::View::ViewImpl::~ViewImpl() {

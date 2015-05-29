@@ -22,15 +22,17 @@
 
 #ifndef __OBJC__
 typedef objc_object CocoaView;
+typedef long NSComparisonResult;
 #endif
 
 #ifdef __OBJC__
 @interface CocoaView : NSView
+@property (nonatomic, assign) NSInteger zIndex;
 @end
 #endif
 
 namespace ui {
-  
+
 class View::ViewImpl {
 public:
   ViewImpl(View * _self, Rect rect);
@@ -50,9 +52,24 @@ public:
   std::vector<View *> * subviews() const;
   void addSubview(View * subview);
   void removeFromSuperview();
+
+  void bringSubviewToFront(View * view);
+  void sendSubviewToBack(View * view);
+
+  void setHidden(bool isHidden);
+  bool isHidden() const;
+
+  void forceRedraw() const;
+
+  int zIndex() const;
+  void setZIndex(int zIndex);
   
   ~ViewImpl();
+
+  static NSComparisonResult
+  viewSiblingViewsCmp(__strong id v1, __strong id v2, void * context);
 private:
+  int m_zIndex;
   bool m_inputEnabled;
   Rect m_frame;
   Color m_bgcolor;
@@ -65,7 +82,7 @@ private:
   friend class Window;
   friend class View;
 };
-  
+
 } // namespace ui
 
 #endif /* defined(__libui__cocoa__view__) */
