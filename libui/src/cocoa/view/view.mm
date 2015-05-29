@@ -248,6 +248,15 @@ ui::View::ViewImpl::isHidden() const {
   return [m_view isHidden];
 }
 
+void
+ui::View::ViewImpl::forceRedraw() {
+  // TODO:
+  // [m_view setNeedsDisplay: true];
+  // [m_view displayIfNeeded];
+
+  [m_view display];
+}
+
 ui::View::ViewImpl::~ViewImpl() {
   m_subviews->clear();
   delete m_subviews;
