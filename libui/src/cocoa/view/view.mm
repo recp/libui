@@ -12,6 +12,7 @@
 - (instancetype) initWithFrame: (NSRect)frameRect {
   self = [super initWithFrame: frameRect];
   if (self) {
+    [self setInputEnabled: YES];
     [self setWantsLayer: YES];
   }
   return self;
@@ -43,6 +44,13 @@
 
 - (BOOL)isFlipped {
   return YES;
+}
+
+- (NSView *)hitTest:(NSPoint)aPoint {
+  if (!self.isInputEnabled)
+    return nil;
+  
+  return [super hitTest: aPoint];
 }
 
 @end
@@ -85,12 +93,12 @@ ui::View::ViewImpl::setFrame(Rect frame) {
 
 bool
 ui::View::ViewImpl::isInputEnabled() const {
-  return m_inputEnabled;
+  return [m_view isInputEnabled];
 }
 
 void
 ui::View::ViewImpl::setInputEnabled(bool enabled) {
-  m_inputEnabled = enabled;
+  [m_view setInputEnabled: (BOOL)enabled];
 }
 
 const ui::View *

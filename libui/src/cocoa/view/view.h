@@ -28,6 +28,7 @@ typedef long NSComparisonResult;
 #ifdef __OBJC__
 @interface CocoaView : NSView
 @property (nonatomic, assign) NSInteger zIndex;
+@property (nonatomic, assign, getter=isInputEnabled) BOOL inputEnabled;
 @end
 #endif
 
@@ -70,7 +71,6 @@ public:
   viewSiblingViewsCmp(__strong id v1, __strong id v2, void * context);
 private:
   int m_zIndex;
-  bool m_inputEnabled;
   Rect m_frame;
   Color m_bgcolor;
   CocoaView * m_view;
