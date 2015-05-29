@@ -38,10 +38,10 @@ public:
   ViewImpl(View * _self, Rect rect);
   
   Color backgroundColor() const;
-  void setBackgroundColor(Color color) const;
+  void setBackgroundColor(Color color);
   
   Rect getFrame() const;
-  void setFrame(Rect frame) const;
+  void setFrame(Rect frame);
 
   bool isInputEnabled() const;
   void setInputEnabled(bool enabled);
@@ -56,14 +56,14 @@ public:
   void bringSubviewToFront(View * view);
   void sendSubviewToBack(View * view);
 
+  int zIndex() const;
+  void setZIndex(int zIndex);
+
   void setHidden(bool isHidden);
   bool isHidden() const;
 
-  void forceRedraw() const;
+  void forceRedraw();
 
-  int zIndex() const;
-  void setZIndex(int zIndex);
-  
   ~ViewImpl();
 
   static NSComparisonResult

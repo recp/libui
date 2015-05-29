@@ -47,7 +47,11 @@
 
 @end
 
-ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) : m_self(_self) {
+ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
+  : m_self(_self),
+    m_superview(nullptr),
+    m_wnd(nullptr) {
+
   m_subviews = new std::vector<View *>();
   m_frame = rect;
 
@@ -65,7 +69,7 @@ ui::View::ViewImpl::backgroundColor() const {
 }
 
 void
-ui::View::ViewImpl::setBackgroundColor(Color color) const {
+ui::View::ViewImpl::setBackgroundColor(Color color) {
   [m_view setBackgroundColor: color];
 }
 
@@ -75,7 +79,7 @@ ui::View::ViewImpl::getFrame() const {
 }
 
 void
-ui::View::ViewImpl::setFrame(Rect frame) const {
+ui::View::ViewImpl::setFrame(Rect frame) {
   [m_view setFrame: frame];
 }
 
@@ -234,8 +238,19 @@ ui::View::ViewImpl::setZIndex(int zIndex) {
   [m_view setZIndex: zIndex];
 }
 
+void
+ui::View::ViewImpl::setHidden(bool isHidden) {
+  [m_view setHidden: (BOOL)isHidden];
+}
+
+bool
+ui::View::ViewImpl::isHidden() const {
+  return [m_view isHidden];
+}
+
 ui::View::ViewImpl::~ViewImpl() {
   m_subviews->clear();
   delete m_subviews;
   m_view = nil;
+  m_superview = nullptr;
 }
