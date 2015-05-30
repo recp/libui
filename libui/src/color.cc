@@ -7,7 +7,7 @@
 
 #include "../include/ui-color.h"
 
-ui::Color::Color(float r, float g, float b, float a)
+ui::Color::Color(double r, double g, double b, double a)
   : red(r), green(g), blue(b), alpha(a) {
     
 };
@@ -17,7 +17,23 @@ ui::Color::Color(const Color& color)
     green(color.green), 
     blue(color.blue), 
     alpha(color.alpha) {
+   
+  float colorMaxVal = 1.0f;
 
+  if (this->red > colorMaxVal) 
+    this->red = colorMaxVal;
+  else if (this->red < 0) 
+    this->red = 0;
+
+  if (this->green > colorMaxVal) 
+    this->green = colorMaxVal;
+  else if (this->green < 0) 
+    this->green = 0;
+
+  if (this->blue > colorMaxVal) 
+    this->blue = colorMaxVal;
+  else if (this->blue < 0) 
+    this->blue = 0;
 }
 
 ui::Color::Color(const char * hexColor)

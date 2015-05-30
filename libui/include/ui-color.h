@@ -20,13 +20,13 @@ typedef unsigned long COLORREF;
 namespace ui {
 
 struct _libui_export Color {
-  float red;
-  float green;
-  float blue;
-  float alpha;
+  double red;
+  double green;
+  double blue;
+  double alpha;
 
   Color(const Color& color);
-  Color(float r = .0f, float g = .0f, float b = .0f, float a = 1.0f);
+  Color(double r = .0f, double g = .0f, double b = .0f, double a = 1.0f);
 
   Color(const char * hexColor);
 

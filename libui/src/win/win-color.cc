@@ -7,9 +7,15 @@
 
 #include "../config.h"
 #include "../../include/ui-color.h"
+#include <math.h>
 
 ui::Color::operator COLORREF () {
-  return RGB(this->red,
-             this->green,
-             this->blue);
+
+  int colorMaxVal = 255;
+
+  int R = round(this->red * colorMaxVal);
+  int G = round(this->green * colorMaxVal);
+  int B = round(this->blue * colorMaxVal);
+
+  return RGB(R, G, B);
 }
