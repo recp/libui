@@ -212,7 +212,6 @@ ui::View::ViewImpl::bringSubviewToFront(View * view) {
 void
 ui::View::ViewImpl::sendSubviewToBack(View * view) {
   ViewImpl * viewImpl = view->m_impl;
-//  viewImpl->setZIndex(0);
 
   std::vector<View *>::iterator fountView_it =
   std::find(m_subviews->begin(),
@@ -270,4 +269,5 @@ ui::View::ViewImpl::~ViewImpl() {
   delete m_subviews;
   m_view = nil;
   m_superview = nullptr;
+  m_wnd = nullptr;
 }
