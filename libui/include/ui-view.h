@@ -42,16 +42,10 @@ public:
   std::vector<View *> * subviews() const;
   void addSubview(View * subview) const;
   
-  // Alternative names: popView();, pop();
   void removeFromSuperview() const;
   
   void bringSubviewToFront(View * view) const;
   void sendSubviewToBack(View * view) const;
-  
-  //void setNeedsLayout() const;
-  //void layoutIfNeeded() const;
-  //
-  //void layoutSubviews() const;
 
   void forceRedraw() const;
 

@@ -106,7 +106,7 @@ ui::View::ViewImpl::WndProc(HWND hWnd,
    
     Color bgColor = viewImpl->backgroundColor();
     HBRUSH brush = CreateSolidBrush(bgColor);
-
+  
     FillRect(hdc, &ps.rcPaint, brush);
     DeleteObject(brush);
 
