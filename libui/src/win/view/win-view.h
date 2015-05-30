@@ -37,8 +37,8 @@ public:
   void addSubview(View * subview);
   void removeFromSuperview();
 
-  void bringSubviewToFront(View * view) const;
-  void sendSubviewToBack(View * view) const;
+  void bringSubviewToFront(View * view);
+  void sendSubviewToBack(View * view);
 
   void setHidden(bool isHidden);
   bool isHidden() const;
@@ -48,7 +48,6 @@ public:
 private:
   Rect m_frame;
   Color m_bgcolor;
-  void * m_view;
   std::vector<View *> * m_subviews;
   View * m_superview;
   Window * m_wnd;

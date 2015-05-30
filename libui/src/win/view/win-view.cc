@@ -14,7 +14,9 @@
 #include <algorithm>
 
 ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) 
-  : m_self(_self) {
+  : m_self(_self),
+    m_superview(nullptr),
+    m_wnd(nullptr) {
 
   m_subviews = new std::vector<View *>;
   m_frame = rect;
@@ -168,7 +170,7 @@ ui::View::ViewImpl::subviews() const {
 }
 
 void 
-ui::View::ViewImpl::addSubview(View *subview) {
+ui::View::ViewImpl::addSubview(View * subview) {
   subview->removeFromSuperview();
 
   ViewImpl * subviewImpl = subview->m_impl;
@@ -187,6 +189,7 @@ ui::View::ViewImpl::addSubview(View *subview) {
     (*subview_it)->m_impl->m_wnd = m_wnd;
   }
 
+  this->bringSubviewToFront(subview);
   m_subviews->push_back(subview);
 }
 
@@ -231,18 +234,13 @@ ui::View::ViewImpl::window() const {
 }
 
 void 
-ui::View::ViewImpl::bringSubviewToFront(View * view) const {
+ui::View::ViewImpl::bringSubviewToFront(View * view) {
   ViewImpl * viewImpl = view->m_impl;
 
-  std::vector<View *>::iterator fountView_it =
-    std::find(m_subviews->begin(),
-              m_subviews->end(), 
-              view);
-
-  if (fountView_it == m_subviews->end())
+  if (m_subviews->size() < 1)
     return;
 
-  View * topView = m_subviews->front();
+  View * topView = m_subviews->back();
   ViewImpl * topViewImpl = topView->m_impl;
 
   SetWindowPos(viewImpl->m_hWnd, 
@@ -258,20 +256,23 @@ ui::View::ViewImpl::bringSubviewToFront(View * view) const {
   UpdateWindow(m_hWnd);
 
   // change z-order in vactor for next 
-  m_subviews->erase(fountView_it);
-  m_subviews->insert(m_subviews->begin(), view);
-}
-
-void 
-ui::View::ViewImpl::sendSubviewToBack(View * view) const {
-  ViewImpl * viewImpl = view->m_impl;
-  
   std::vector<View *>::iterator fountView_it =
     std::find(m_subviews->begin(),
               m_subviews->end(), 
               view);
 
   if (fountView_it == m_subviews->end())
+    return;
+
+  m_subviews->erase(fountView_it);
+  m_subviews->push_back(view);
+}
+
+void 
+ui::View::ViewImpl::sendSubviewToBack(View * view) {
+  ViewImpl * viewImpl = view->m_impl;
+  
+  if (m_subviews->size() < 1)
     return;
 
   SetWindowPos(viewImpl->m_hWnd,
@@ -286,9 +287,17 @@ ui::View::ViewImpl::sendSubviewToBack(View * view) const {
   InvalidateRect(m_hWnd, NULL, true);
   UpdateWindow(m_hWnd);
 
-  // change z-order in vactor for next 
+  // change z-order in vactor for next
+  std::vector<View *>::iterator fountView_it =
+  std::find(m_subviews->begin(),
+            m_subviews->end(), 
+            view);
+
+  if (fountView_it == m_subviews->end())
+    return;
+
   m_subviews->erase(fountView_it);
-  m_subviews->push_back(view);
+  m_subviews->insert(m_subviews->begin(), view);
 }
 
 void 
@@ -317,5 +326,6 @@ ui::View::ViewImpl::forceRedraw() const {
 ui::View::ViewImpl::~ViewImpl() {
   m_subviews->clear();
   delete m_subviews;
-  m_view = nullptr;
+  m_superview = nullptr;
+  m_wnd = nullptr;
 }
