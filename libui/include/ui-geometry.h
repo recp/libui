@@ -31,7 +31,7 @@ struct _libui_export Point {
   double x;
   double y;
 
-  Point(float _x=0.0, float _y=0.0)
+  Point(double _x=0.0, double _y=0.0)
     : x(_x), y(_y) { }
 
   bool operator==(const Point& p) const;
@@ -43,10 +43,10 @@ struct _libui_export Point {
 };
 
 struct _libui_export Size {
-  float width;
-  float height;
+  double width;
+  double height;
 
-  Size(float _w=0.0, float _h=0.0)
+  Size(double _w=0.0, double _h=0.0)
     : width(_w), height(_h) { }
 
 #ifdef __OBJC__
@@ -55,8 +55,8 @@ struct _libui_export Size {
 };
 
 struct _libui_export Vector {
-  float dx;
-  float dy;
+  double dx;
+  double dy;
 };
 
 struct _libui_export Rect {

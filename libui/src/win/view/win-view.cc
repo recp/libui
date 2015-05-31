@@ -56,10 +56,10 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
   m_hWnd = CreateWindow(m_szWindowClass, 
                         NULL, 
                         windowMask,
-                        rect.origin.x, 
-                        rect.origin.y, 
-                        rect.size.width, 
-                        rect.size.height,
+                        (int)rect.origin.x, 
+                        (int)rect.origin.y, 
+                        (int)rect.size.width, 
+                        (int)rect.size.height,
                         hParentWnd, 
                         NULL,
                         m_hInstance, 
@@ -96,10 +96,10 @@ ui::View::ViewImpl::WndProc(HWND hWnd,
   case WM_COMMAND:
     wmId = LOWORD(wParam);
     wmEvent = HIWORD(wParam);
-    switch (wmId) {
-    default:
-      return DefWindowProc(hWnd, uMsg, wParam, lParam);
-    }
+    //switch (wmId) {
+    //default:
+    //  return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    //}
     break;
   case WM_PAINT: {
     hdc = BeginPaint(hWnd, &ps);
@@ -147,16 +147,16 @@ ui::View::ViewImpl::setFrame(Rect frame) {
 
   SetWindowPos(m_hWnd, 
                NULL, 
-               frame.origin.x,
-               frame.origin.y,
-               frame.size.width,
-               frame.size.height,
+               (int)frame.origin.x,
+               (int)frame.origin.y,
+               (int)frame.size.width,
+               (int)frame.size.height,
                SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 }
 
 bool 
 ui::View::ViewImpl::isInputEnabled() const {
-  return IsWindowEnabled(m_hWnd);
+  return IsWindowEnabled(m_hWnd) == TRUE;
 }
 
 void 
@@ -245,10 +245,10 @@ ui::View::ViewImpl::bringSubviewToFront(View * view) {
 
   SetWindowPos(viewImpl->m_hWnd, 
                topViewImpl->m_hWnd, 
-               viewImpl->m_frame.origin.x,
-               viewImpl->m_frame.origin.y,
-               viewImpl->m_frame.size.width,
-               viewImpl->m_frame.size.height,
+               (int)viewImpl->m_frame.origin.x,
+               (int)viewImpl->m_frame.origin.y,
+               (int)viewImpl->m_frame.size.width,
+               (int)viewImpl->m_frame.size.height,
                SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
 
   // TODO: Do we really need to update the parent wnd?
@@ -277,10 +277,10 @@ ui::View::ViewImpl::sendSubviewToBack(View * view) {
 
   SetWindowPos(viewImpl->m_hWnd,
                NULL,
-               viewImpl->m_frame.origin.x,
-               viewImpl->m_frame.origin.y,
-               viewImpl->m_frame.size.width,
-               viewImpl->m_frame.size.height,
+               (int)viewImpl->m_frame.origin.x,
+               (int)viewImpl->m_frame.origin.y,
+               (int)viewImpl->m_frame.size.width,
+               (int)viewImpl->m_frame.size.height,
                SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
 
   // TODO: Do we really need to update the parent wnd?
@@ -314,7 +314,7 @@ ui::View::ViewImpl::setHidden(bool isHidden) {
   
 bool 
 ui::View::ViewImpl::isHidden() const {
-  return !(bool)IsWindowVisible(m_hWnd);
+  return IsWindowVisible(m_hWnd) == FALSE;
 }
 
 void 

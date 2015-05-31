@@ -57,6 +57,8 @@ public:
   void show() const;
   void hide() const;
 
+  void attachToWindow(Window * wnd) const;
+
   ~Window();
 private:
   Window() = delete;

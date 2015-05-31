@@ -23,10 +23,10 @@ ui::Rect::fromWin32RECT(RECT rc) {
 ui::Rect::operator RECT () {
 
   RECT rc;
-  rc.left   = origin.x;
-  rc.top    = origin.y;
-  rc.right  = origin.x + size.width;
-  rc.bottom = origin.y + size.height;
+  rc.left   = (LONG)origin.x;
+  rc.top    = (LONG)origin.y;
+  rc.right  = (LONG)(origin.x + size.width);
+  rc.bottom = (LONG)(origin.y + size.height);
 
   return rc;
 }

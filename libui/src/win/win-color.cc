@@ -13,9 +13,9 @@ ui::Color::operator COLORREF () {
 
   int colorMaxVal = 255;
 
-  int R = round(this->red * colorMaxVal);
-  int G = round(this->green * colorMaxVal);
-  int B = round(this->blue * colorMaxVal);
+  int R = (int)round(this->red * colorMaxVal);
+  int G = (int)round(this->green * colorMaxVal);
+  int B = (int)round(this->blue * colorMaxVal);
 
   return RGB(R, G, B);
 }

@@ -87,10 +87,10 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
   case WM_COMMAND:
     wmId = LOWORD(wParam);
     wmEvent = HIWORD(wParam);
-    switch (wmId) {
-    default:
-      return DefWindowProc(hWnd, message, wParam, lParam);
-    }
+    //switch (wmId) {
+    //default:
+    //  return DefWindowProc(hWnd, message, wParam, lParam);
+    //}
     break;
   case WM_PAINT:
     hdc = BeginPaint(hWnd, &ps);
