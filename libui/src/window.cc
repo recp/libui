@@ -30,6 +30,11 @@ ui::Window::hide() const {
   m_impl->hide();
 }
 
+void
+ui::Window::center() {
+  m_impl->center();
+}
+
 ui::CStringPtr
 ui::Window::getTitle() const {
   return m_impl->getTitle();

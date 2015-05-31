@@ -126,6 +126,14 @@ ui::Window::WindowImpl::hide() const {
   [m_wnd orderOut: m_wnd];
 }
 
+void
+ui::Window::WindowImpl::center() {
+  NSRect _nsFrm = [[m_wnd screen] frame];
+  _nsFrm.origin.x = (_nsFrm.size.width - m_wnd.frame.size. width) / 2.0;
+  _nsFrm.origin.y = (_nsFrm.size.height - m_wnd.frame.size.height) / 2.0;
+  [m_wnd setFrameOrigin: _nsFrm.origin];
+}
+
 ui::Rect
 ui::Window::WindowImpl::getFrame() const {
   NSRect _nswndFrame = m_wnd.frame;

@@ -184,6 +184,22 @@ ui::Window::WindowImpl::hide() const {
   UpdateWindow(m_hWnd);
 }
 
+void 
+ui::Window::WindowImpl::center() {
+  int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+  int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+  
+  Rect frm = this->getFrame();
+  int offsetX = (int)((screenWidth - frm.size.width) / 2.0);
+  int offsetY = (int)((screenHeight - frm.size.height) / 2.0);
+  MoveWindow(m_hWnd,
+             offsetX,
+             offsetY, 
+             (int)frm.size.width,
+             (int)frm.size.height, 
+             FALSE);
+}
+
 ui::View * 
 ui::Window::WindowImpl::contentView() {
   if (m_contentView && !m_contentView->m_impl->m_wnd) {

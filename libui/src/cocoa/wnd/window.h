@@ -46,6 +46,8 @@ public:
   void show() const;
   void hide() const;
 
+  void center();
+  
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior);
 
