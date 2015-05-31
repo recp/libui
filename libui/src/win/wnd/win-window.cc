@@ -178,6 +178,12 @@ ui::Window::WindowImpl::show() const {
   UpdateWindow(m_hWnd);
 }
 
+void 
+ui::Window::WindowImpl::hide() const {
+  ShowWindow(m_hWnd, 0);
+  UpdateWindow(m_hWnd);
+}
+
 ui::View * 
 ui::Window::WindowImpl::contentView() {
   if (m_contentView && !m_contentView->m_impl->m_wnd) {

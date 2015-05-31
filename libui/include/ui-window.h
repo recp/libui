@@ -51,16 +51,15 @@ public:
   Rect getFrame() const;
   void setFrame(Rect frame) const;
 
-  bool isFullScreen() const;
-  void toogleFullScreen() const;
-
   View * contentView() const;
   void setContentView(View * view) const;
 
-  void center();
-
   void show() const;
   void hide() const;
+
+  void center();
+  bool isFullScreen() const;
+  void toogleFullScreen() const;
 
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior) const;

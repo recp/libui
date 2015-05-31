@@ -117,9 +117,14 @@ ui::Window::WindowImpl::setTitle(CStringPtr title) const {
 
 void
 ui::Window::WindowImpl::show() const {
-  [m_wnd makeKeyAndOrderFront: nil];
+  [m_wnd makeKeyAndOrderFront: m_wnd];
+  [NSApp activateIgnoringOtherApps:YES];
 }
 
+void
+ui::Window::WindowImpl::hide() const {
+  [m_wnd orderOut: m_wnd];
+}
 
 ui::Rect
 ui::Window::WindowImpl::getFrame() const {

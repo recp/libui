@@ -25,6 +25,11 @@ ui::Window::show() const {
   m_impl->show();
 }
 
+void
+ui::Window::hide() const {
+  m_impl->hide();
+}
+
 ui::CStringPtr
 ui::Window::getTitle() const {
   return m_impl->getTitle();

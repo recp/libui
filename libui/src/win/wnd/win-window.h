@@ -22,13 +22,14 @@ public:
   CStringPtr getTitle() const;
   void setTitle(CStringPtr title);
 
-  void show() const;
-
   Rect getFrame() const;
   void setFrame(Rect frame);
 
   View * contentView();
   void setContentView(View * view);
+
+  void show() const;
+  void hide() const;
 
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior);
