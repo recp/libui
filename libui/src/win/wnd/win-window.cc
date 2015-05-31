@@ -114,7 +114,13 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
     EndPaint(hWnd, &ps);
     break;
   case WM_DESTROY:
-    PostQuitMessage(0);
+    switch (windowImpl->getCloseBehavior()) {
+    case kWindowCloseBehavior_AppShouldExit:
+      PostQuitMessage(0);
+      break;
+    default:
+      break;
+    }
     break;
   default:
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
