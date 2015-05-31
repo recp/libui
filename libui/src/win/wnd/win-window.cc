@@ -61,7 +61,7 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
                         NULL, 
                         NULL,
                         m_hInstance, 
-                        NULL);
+                        this);
 
   if (!m_hWnd) {
     debug::logt("win:window", "couldnt create window, last err: %d", 
@@ -73,14 +73,24 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
 
 LRESULT CALLBACK 
 ui::Window::WindowImpl::WndProc(HWND hWnd, 
-                                UINT message, 
+                                UINT uMsg, 
                                 WPARAM wParam, 
                                 LPARAM lParam) {
   int wmId, wmEvent;
   PAINTSTRUCT ps;
   HDC hdc;
 
-  switch (message) {
+  WindowImpl * windowImpl = NULL;
+  if (uMsg == WM_CREATE) {
+    CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT *>(lParam);
+    windowImpl = reinterpret_cast<WindowImpl *>(pCreate->lpCreateParams);
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)windowImpl);
+  } else {
+    LONG_PTR ptr = GetWindowLongPtr(hWnd, GWLP_USERDATA);
+    windowImpl = reinterpret_cast<WindowImpl *>(ptr);
+  }
+
+  switch (uMsg) {
   case WM_CREATE:
 
     break;
@@ -92,6 +102,12 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
     //  return DefWindowProc(hWnd, message, wParam, lParam);
     //}
     break;
+  case WM_SIZE: {
+    Rect wndBounds = windowImpl->getFrame();
+    wndBounds.origin = {0};
+    windowImpl->contentView()->setFrame(wndBounds);
+    break;
+  }
   case WM_PAINT:
     hdc = BeginPaint(hWnd, &ps);
 
@@ -101,7 +117,7 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
     PostQuitMessage(0);
     break;
   default:
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
   }
 
   return 0;
