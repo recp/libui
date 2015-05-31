@@ -114,7 +114,7 @@ ui::View::ViewImpl::WndProc(HWND hWnd,
     break;
   }
   case WM_DESTROY:
-    PostQuitMessage(0);
+    
     break;
   default:
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
