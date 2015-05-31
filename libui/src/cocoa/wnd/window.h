@@ -33,8 +33,10 @@ namespace ui {
 class Window::WindowImpl {
 public:
   WindowImpl(Window *_self, Rect rect, int style = 0);
-  
-  void setTitle(const char * title) const;
+
+  CStringPtr getTitle() const;
+  void setTitle(CStringPtr title) const;
+
   void show() const;
 
   Rect getFrame() const;

@@ -25,8 +25,13 @@ ui::Window::show() const {
   m_impl->show();
 }
 
+ui::CStringPtr
+ui::Window::getTitle() const {
+  return m_impl->getTitle();
+}
+
 void
-ui::Window::setTitle(const char *title) const {
+ui::Window::setTitle(CStringPtr title) const {
   m_impl->setTitle(title);
 }
 

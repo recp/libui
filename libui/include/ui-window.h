@@ -45,8 +45,8 @@ public:
   Window(Rect rect, int style = 0);
   Window(Window * parent,  Rect rect, int style = 0);
 
-  void getTitle() const;
-  void setTitle(const char * title) const;
+  CStringPtr getTitle() const;
+  void setTitle(CStringPtr title) const;
 
   Rect getFrame() const;
   void setFrame(Rect frame) const;

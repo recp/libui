@@ -33,7 +33,7 @@
   return YES;
 }
 
-- (void)windowWillClose:(NSNotification *)notification {
+- (void) windowWillClose:(NSNotification *)notification {
   if (self.closeBahavior == ui::kWindowCloseBehavior_AppShouldExit) {
     [[NSApplication sharedApplication] terminate: nil];
   }
@@ -102,8 +102,15 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   m_self = _self;
 }
 
+ui::CStringPtr
+ui::Window::WindowImpl::getTitle() const {
+  NSString * _nsTitle = [m_wnd title];
+  CStringPtr title = [_nsTitle cStringUsingEncoding: NSUTF8StringEncoding];
+  return title;
+}
+
 void
-ui::Window::WindowImpl::setTitle(const char *title) const {
+ui::Window::WindowImpl::setTitle(CStringPtr title) const {
   [m_wnd setTitle: [NSString stringWithCString: title
                                       encoding: NSUTF8StringEncoding]];
 }
