@@ -180,6 +180,16 @@ ui::Window::WindowImpl::setContentView(ui::View * view) {
 
   view->m_impl->m_wnd = const_cast<Window *>(m_self);
 }
+ 
+ui::WindowCloseBehavior 
+ui::Window::WindowImpl::getCloseBehavior() const {
+  return m_closeBehavior;
+}
+  
+void 
+ui::Window::WindowImpl::setCloseBehavior(WindowCloseBehavior closeBehavior) {
+  m_closeBehavior = closeBehavior;
+}
 
 ui::Window::WindowImpl::~WindowImpl() {
   DestroyWindow(m_hWnd);

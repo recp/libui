@@ -50,6 +50,16 @@ ui::Window::setContentView(ui::View *view) const {
   m_impl->setContentView(view);
 }
 
+ui::WindowCloseBehavior 
+ui::Window::getCloseBehavior() const {
+  return m_impl->getCloseBehavior();
+}
+  
+void 
+ui::Window::setCloseBehavior(WindowCloseBehavior closeBehavior) const {
+  m_impl->setCloseBehavior(closeBehavior);
+}
+
 ui::Window::~Window() {
   delete m_impl;
 }

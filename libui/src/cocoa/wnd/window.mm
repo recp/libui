@@ -35,11 +35,9 @@
 
 @end
 
-namespace wnd = ui;
-
 NSUInteger translateWndStyleToCocoaWS(int style) {
   NSUInteger cocoaWS = 0;
-  if (style == wnd::kWindowStyleDefault) {
+  if (style == ui::kWindowStyleDefault) {
     cocoaWS = (NSTitledWindowMask
              | NSMiniaturizableWindowMask
              | NSResizableWindowMask
@@ -50,30 +48,30 @@ NSUInteger translateWndStyleToCocoaWS(int style) {
 
   BOOL borderless = false;
 
-  if (style & wnd::kWindowStyleBorderless) {
+  if (style & ui::kWindowStyleBorderless) {
     cocoaWS |= NSBorderlessWindowMask;
     borderless = true;
   }
 
-  if ((style & wnd::kWindowStyleTitled) || !borderless)
+  if ((style & ui::kWindowStyleTitled) || !borderless)
     cocoaWS |= NSTitledWindowMask;
 
-  if (style & wnd::kWindowStyleFullscreen)
+  if (style & ui::kWindowStyleFullscreen)
     cocoaWS |= NSFullScreenWindowMask;
 
-  if (style & wnd::kWindowStyleCloseButton)
+  if (style & ui::kWindowStyleCloseButton)
     cocoaWS |= NSClosableWindowMask;
 
-  if (style & wnd::kWindowStyleMaximizeButton)
+  if (style & ui::kWindowStyleMaximizeButton)
     cocoaWS |= NSResizableWindowMask;
 
-  if (style & wnd::kWindowStyleMinimizeButton)
+  if (style & ui::kWindowStyleMinimizeButton)
     cocoaWS |= NSMiniaturizableWindowMask;
 
   return cocoaWS;
 }
 
-wnd::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
+ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
     : m_self(_self) {
 
   NSInteger windowMask = translateWndStyleToCocoaWS(style);
@@ -98,20 +96,38 @@ wnd::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   m_self = _self;
 }
 
-void wnd::Window::WindowImpl::setTitle(const char *title) const {
+void
+ui::Window::WindowImpl::setTitle(const char *title) const {
   [m_wnd setTitle: [NSString stringWithCString: title
                                       encoding: NSUTF8StringEncoding]];
 }
 
-void wnd::Window::WindowImpl::show() const {
+void
+ui::Window::WindowImpl::show() const {
   [m_wnd makeKeyAndOrderFront: nil];
 }
 
-ui::View * wnd::Window::WindowImpl::contentView() const {
+
+ui::Rect
+ui::Window::WindowImpl::getFrame() const {
+  NSRect _nswndFrame = m_wnd.frame;
+  Rect wndFrame({{_nswndFrame.origin.x, _nswndFrame.origin.y},
+                 {_nswndFrame.size.width, _nswndFrame.size.height}});
+  return wndFrame;
+}
+
+void
+ui::Window::WindowImpl::setFrame(Rect frame) {
+  [m_wnd setFrame: frame display: YES];
+}
+
+ui::View *
+ui::Window::WindowImpl::contentView() const {
   return m_contentView;
 }
 
-void wnd::Window::WindowImpl::setContentView(ui::View *view) {
+void
+ui::Window::WindowImpl::setContentView(ui::View *view) {
   NSView *_nsView = view->m_impl->m_view;
   [m_wnd setContentView: _nsView];
 
@@ -119,6 +135,16 @@ void wnd::Window::WindowImpl::setContentView(ui::View *view) {
   m_contentView = view;
 }
 
-wnd::Window::WindowImpl::~WindowImpl() {
+ui::WindowCloseBehavior
+ui::Window::WindowImpl::getCloseBehavior() const {
+  return m_closeBehavior;
+}
+
+void
+ui::Window::WindowImpl::setCloseBehavior(WindowCloseBehavior closeBehavior) {
+  m_closeBehavior = closeBehavior;
+}
+
+ui::Window::WindowImpl::~WindowImpl() {
   m_wnd = nil;
 }

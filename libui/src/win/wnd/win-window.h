@@ -28,6 +28,9 @@ public:
   View * contentView();
   void setContentView(View * view);
 
+  WindowCloseBehavior getCloseBehavior() const;
+  void setCloseBehavior(WindowCloseBehavior closeBehavior);
+
   ~WindowImpl();
 private:
   static LRESULT CALLBACK WndProc(HWND hWnd,
@@ -35,15 +38,15 @@ private:
                                   WPARAM wParam,
                                   LPARAM lParam);
 
-  int            m_style;
-  View *         m_contentView;
+  int                 m_style;
+  View *              m_contentView;
+  WindowCloseBehavior m_closeBehavior;
+  TCHAR               m_szWindowClass[50];
+  HWND                m_hWnd;
+  HINSTANCE           m_hInstance;
+  LPCWSTR             m_szTitle;
 
-  TCHAR          m_szWindowClass[50];
-  HWND           m_hWnd;
-  HINSTANCE      m_hInstance;
-  LPCWSTR        m_szTitle;
-
-  const Window * m_self;
+  const Window *      m_self;
 };
 
 } // namespace ui

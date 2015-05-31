@@ -35,6 +35,11 @@ enum WindowStyle {
                               |kWindowStyleMaximizeButton
 };
 
+enum WindowCloseBehavior {
+  kWindowCloseBehavior_None,
+  kWindowCloseBehavior_AppShouldExit
+};
+
 class _libui_export Window /* : public IWindow */ {
 public:
   Window(Rect rect, int style = 0);
@@ -56,6 +61,9 @@ public:
 
   void show() const;
   void hide() const;
+
+  WindowCloseBehavior getCloseBehavior() const;
+  void setCloseBehavior(WindowCloseBehavior closeBehavior) const;
 
   void attachToWindow(Window * wnd) const;
 

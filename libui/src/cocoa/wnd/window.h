@@ -35,16 +35,23 @@ public:
   
   void setTitle(const char * title) const;
   void show() const;
+
+  Rect getFrame() const;
+  void setFrame(Rect frame);
   
   View * contentView() const;
   void setContentView(View * view) ;
-  
+
+  WindowCloseBehavior getCloseBehavior() const;
+  void setCloseBehavior(WindowCloseBehavior closeBehavior);
+
   ~WindowImpl();
 private:
-  int m_style;
-  CocoaWindow * m_wnd;
-  View * m_contentView;
-  const Window * m_self;
+  int                 m_style;
+  WindowCloseBehavior m_closeBehavior;
+  CocoaWindow *       m_wnd;
+  View *              m_contentView;
+  const Window *      m_self;
 };
 
 } // namespace ui
