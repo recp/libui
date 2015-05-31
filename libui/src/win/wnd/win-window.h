@@ -19,10 +19,13 @@ class Window::WindowImpl {
 public:
   WindowImpl(Window *_self, Rect rect, int style = 0);
 
-  void setTitle(const char * title) const;
+  void setTitle(const char * title);
   void show() const;
 
-  View * contentView() const;
+  Rect getFrame() const;
+  void setFrame(Rect frame);
+
+  View * contentView();
   void setContentView(View * view);
 
   ~WindowImpl();

@@ -15,6 +15,9 @@
 ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   : m_self(_self) {
 
+  Rect contentViewRect({{0, 0}, {rect.size.width, rect.size.height}});
+  m_contentView = new View(contentViewRect);
+  m_contentView->setBackgroundColor(Color::whiteColor());
   m_hInstance = GetModuleHandle(NULL);
 
   static const char * defaultClassName = "libui_def_wnd";
@@ -51,10 +54,10 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
   m_hWnd = CreateWindow(m_szWindowClass, 
                         m_szTitle, 
                         windowMask,
-                        rect.origin.x, 
-                        rect.origin.y, 
-                        rect.size.width, 
-                        rect.size.height,
+                        (int)rect.origin.x, 
+                        (int)rect.origin.y, 
+                        (int)rect.size.width, 
+                        (int)rect.size.height,
                         NULL, 
                         NULL,
                         m_hInstance, 
@@ -64,7 +67,7 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
     debug::logt("win:window", "couldnt create window, last err: %d", 
                 GetLastError());
   }
-
+    
   m_self = _self;
 }
 
@@ -105,9 +108,29 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
 }
 
 void 
-ui::Window::WindowImpl::setTitle(const char *title) const {
+ui::Window::WindowImpl::setTitle(const char *title) {
   // TODO: MultiByteToWideChar can be used for non-ansi strings
   ::SetWindowTextA(m_hWnd, title);
+}
+
+ui::Rect 
+ui::Window::WindowImpl::getFrame() const {
+  RECT rc;
+  GetWindowRect(m_hWnd, &rc);
+
+  return Rect::fromWin32RECT(rc);
+}
+
+void
+ui::Window::WindowImpl::setFrame(Rect frame) {
+
+  SetWindowPos(m_hWnd, 
+               NULL, 
+               (int)frame.origin.x,
+               (int)frame.origin.y,
+               (int)frame.size.width,
+               (int)frame.size.height,
+               SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 }
 
 void 
@@ -117,12 +140,23 @@ ui::Window::WindowImpl::show() const {
 }
 
 ui::View * 
-ui::Window::WindowImpl::contentView() const {
+ui::Window::WindowImpl::contentView() {
+  if (m_contentView && !m_contentView->m_impl->m_wnd) {
+    this->setContentView(m_contentView);
+  }
+
   return m_contentView;
 }
 
 void 
 ui::Window::WindowImpl::setContentView(ui::View * view) {
+  // remove prev contentview
+  if (m_contentView) {
+    SetParent(m_contentView->m_impl->m_hWnd, NULL);
+    InvalidateRect(m_hWnd, NULL, TRUE);
+    UpdateWindow(m_hWnd);
+  }
+
   SetParent(view->m_impl->m_hWnd, m_hWnd);
 
   ShowWindow(view->m_impl->m_hWnd, 1);
@@ -133,4 +167,5 @@ ui::Window::WindowImpl::setContentView(ui::View * view) {
 
 ui::Window::WindowImpl::~WindowImpl() {
   DestroyWindow(m_hWnd);
+  delete m_contentView;
 }
