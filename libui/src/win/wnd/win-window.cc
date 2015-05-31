@@ -132,19 +132,24 @@ ui::Window::WindowImpl::WndProc(HWND hWnd,
 ui::CStringPtr 
 ui::Window::WindowImpl::getTitle() const {
   int titleMaxLen = 512;
-  LPWSTR lpwTitle = NULL;
-  GetWindowText(m_hWnd, lpwTitle, titleMaxLen);
+  WCHAR _wTitle[512];
+  GetWindowText(m_hWnd, _wTitle, titleMaxLen);
+
+  if (!_wTitle)
+    return nullptr;
 
   char title[512];
-  wcstombs(title, lpwTitle, titleMaxLen);
+  wcstombs(title, _wTitle, titleMaxLen);
 
   return title;
 }
 
 void 
 ui::Window::WindowImpl::setTitle(CStringPtr title) {
-  // TODO: MultiByteToWideChar can be used for non-ansi strings
-  ::SetWindowTextA(m_hWnd, title);
+  int titleMaxLen = 512;
+  WCHAR _wTitle[512];
+  mbstowcs(_wTitle, title, titleMaxLen);
+  SetWindowText(m_hWnd, _wTitle);
 }
 
 ui::Rect 
