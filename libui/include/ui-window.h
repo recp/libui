@@ -43,13 +43,8 @@ public:
   void getTitle() const;
   void setTitle(const char * title) const;
 
-  void attachToWindow(Window * wnd) const;
-
-  const Point&& getPosition() const;
-  void setPosition(Point rect) const;
-
-  const Rect&& getRect() const;
-  void setRect(Rect rect) const;
+  Rect getFrame() const;
+  void setFrame(Rect frame) const;
 
   bool isFullScreen() const;
   void toogleFullScreen() const;
@@ -58,10 +53,7 @@ public:
   void setContentView(View * view) const;
 
   void center();
-  void centerVertical();
-  void centerHorizontal();
 
-  // Iki duruma da WindowAnimation eklenebilir
   void show() const;
   void hide() const;
 

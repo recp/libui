@@ -30,6 +30,16 @@ ui::Window::setTitle(const char *title) const {
   m_impl->setTitle(title);
 }
 
+ui::Rect
+ui::Window::getFrame() const {
+  return m_impl->getFrame();
+}
+
+void
+ui::Window::setFrame(Rect rect) const {
+  m_impl->setFrame(rect);
+}
+
 ui::View *
 ui::Window::contentView() const {
   return m_impl->contentView();
