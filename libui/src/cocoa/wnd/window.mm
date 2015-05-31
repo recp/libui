@@ -19,7 +19,7 @@
                               defer: YES];
 
   if (self) {
-    // ...
+    self.delegate = self;
   }
 
   return self;
@@ -31,6 +31,12 @@
 
 - (BOOL) canBecomeMainWindow {
   return YES;
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+  if (self.closeBahavior == ui::kWindowCloseBehavior_AppShouldExit) {
+    [[NSApplication sharedApplication] terminate: nil];
+  }
 }
 
 @end
@@ -143,6 +149,7 @@ ui::Window::WindowImpl::getCloseBehavior() const {
 void
 ui::Window::WindowImpl::setCloseBehavior(WindowCloseBehavior closeBehavior) {
   m_closeBehavior = closeBehavior;
+  [m_wnd setCloseBahavior: closeBehavior];
 }
 
 ui::Window::WindowImpl::~WindowImpl() {

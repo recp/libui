@@ -22,7 +22,8 @@ typedef objc_object CocoaWindow;
 #include "../../../include/ui-view.h"
 
 #ifdef __OBJC__
-@interface CocoaWindow : NSWindow
+@interface CocoaWindow : NSWindow <NSWindowDelegate>
+@property (nonatomic, assign) ui::WindowCloseBehavior closeBahavior;
 - (instancetype) initWithRect: (NSRect) rect style: (NSUInteger) aStyle;
 @end
 #endif
