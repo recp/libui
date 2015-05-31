@@ -35,6 +35,16 @@ ui::Window::center() {
   m_impl->center();
 }
 
+void
+ui::Window::enterFullScreen() const {
+  m_impl->enterFullScreen();
+}
+
+void
+ui::Window::exitFullScreen() const {
+  m_impl->exitFullScreen();
+}
+
 ui::CStringPtr
 ui::Window::getTitle() const {
   return m_impl->getTitle();

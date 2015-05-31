@@ -33,10 +33,20 @@
   return YES;
 }
 
+#pragma mark - Window Delegate
+
 - (void) windowWillClose:(NSNotification *)notification {
   if (self.closeBahavior == ui::kWindowCloseBehavior_AppShouldExit) {
     [[NSApplication sharedApplication] terminate: nil];
   }
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification *)notification {
+  self.fullScreen = true;
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification {
+  self.fullScreen = false;
 }
 
 @end
@@ -132,6 +142,23 @@ ui::Window::WindowImpl::center() {
   _nsFrm.origin.x = (_nsFrm.size.width - m_wnd.frame.size. width) / 2.0;
   _nsFrm.origin.y = (_nsFrm.size.height - m_wnd.frame.size.height) / 2.0;
   [m_wnd setFrameOrigin: _nsFrm.origin];
+}
+
+void
+ui::Window::WindowImpl::enterFullScreen() const {
+  if ([m_wnd isFullScreen])
+    return;
+
+  [m_wnd setCollectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary];
+  [m_wnd toggleFullScreen: nil];
+}
+
+void
+ui::Window::WindowImpl::exitFullScreen() const {
+  if (![m_wnd isFullScreen])
+    return;
+
+  [m_wnd toggleFullScreen: nil];
 }
 
 ui::Rect

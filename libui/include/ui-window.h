@@ -59,7 +59,8 @@ public:
 
   void center();
   bool isFullScreen() const;
-  void toogleFullScreen() const;
+  void enterFullScreen() const;
+  void exitFullScreen() const;
 
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior) const;

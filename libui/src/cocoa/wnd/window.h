@@ -23,6 +23,7 @@ typedef objc_object CocoaWindow;
 
 #ifdef __OBJC__
 @interface CocoaWindow : NSWindow <NSWindowDelegate>
+@property (nonatomic, assign, getter=isFullScreen) bool fullScreen;
 @property (nonatomic, assign) ui::WindowCloseBehavior closeBahavior;
 - (instancetype) initWithRect: (NSRect) rect style: (NSUInteger) aStyle;
 @end
@@ -47,7 +48,9 @@ public:
   void hide() const;
 
   void center();
-  
+  void enterFullScreen() const;
+  void exitFullScreen() const;
+
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior);
 
