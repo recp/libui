@@ -28,10 +28,12 @@ public:
   View * contentView();
   void setContentView(View * view);
 
-  void show() const;
-  void hide() const;
+  void show();
+  void hide();
 
   void center();
+  void enterFullScreen();
+  void exitFullScreen();
 
   WindowCloseBehavior getCloseBehavior() const;
   void setCloseBehavior(WindowCloseBehavior closeBehavior);
@@ -50,6 +52,7 @@ private:
   HWND                m_hWnd;
   HINSTANCE           m_hInstance;
   LPCWSTR             m_szTitle;
+  WINDOWPLACEMENT     m_prevPlace;
 
   const Window *      m_self;
 };

@@ -173,13 +173,14 @@ ui::Window::WindowImpl::setFrame(Rect frame) {
 }
 
 void 
-ui::Window::WindowImpl::show() const {
+ui::Window::WindowImpl::show() {
+  GetWindowPlacement(m_hWnd, &m_prevPlace); 
   ShowWindow(m_hWnd, 1);
   UpdateWindow(m_hWnd);
 }
 
 void 
-ui::Window::WindowImpl::hide() const {
+ui::Window::WindowImpl::hide() {
   ShowWindow(m_hWnd, 0);
   UpdateWindow(m_hWnd);
 }
@@ -207,6 +208,48 @@ ui::Window::WindowImpl::contentView() {
   }
 
   return m_contentView;
+}
+
+void
+ui::Window::WindowImpl::enterFullScreen() {
+  GetWindowPlacement(m_hWnd, &m_prevPlace);
+  DWORD dwStyle = GetWindowLong(m_hWnd, GWL_STYLE);
+
+  if (dwStyle & WS_OVERLAPPEDWINDOW) {
+    HMONITOR hMonitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTOPRIMARY);
+    MONITORINFO mi;
+    mi.cbSize = sizeof(mi);
+    if (GetMonitorInfo(hMonitor, &mi)) {
+      SetWindowLong(m_hWnd,
+                    GWL_STYLE,
+                    dwStyle & ~WS_OVERLAPPEDWINDOW);
+      SetWindowPos(m_hWnd,
+                   HWND_TOP,
+                   mi.rcMonitor.left, 
+                   mi.rcMonitor.top,
+                   mi.rcMonitor.right - mi.rcMonitor.left,
+                   mi.rcMonitor.bottom - mi.rcMonitor.top,
+                   SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+    }
+  }
+}
+
+void
+ui::Window::WindowImpl::exitFullScreen() {
+  DWORD dwStyle = GetWindowLong(m_hWnd, GWL_STYLE);
+
+  // TODO:
+  // WS_OVERLAPPEDWINDOW shouldnt add directly to wnd style because the window
+  // may not contain caption, border, menu...
+  SetWindowLong(m_hWnd, 
+                GWL_STYLE,
+                dwStyle | WS_OVERLAPPEDWINDOW);
+  SetWindowPlacement(m_hWnd, &m_prevPlace);
+  SetWindowPos(m_hWnd, 
+               NULL, 
+               0, 0, 0, 0,
+               SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+               SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 }
 
 void 
