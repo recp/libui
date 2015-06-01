@@ -185,6 +185,15 @@ ui::Window::WindowImpl::hide() {
   UpdateWindow(m_hWnd);
 }
 
+ui::View * 
+ui::Window::WindowImpl::contentView() {
+  if (m_contentView && !m_contentView->m_impl->m_wnd) {
+    this->setContentView(m_contentView);
+  }
+
+  return m_contentView;
+}
+
 void 
 ui::Window::WindowImpl::center() {
   int screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -201,13 +210,9 @@ ui::Window::WindowImpl::center() {
              FALSE);
 }
 
-ui::View * 
-ui::Window::WindowImpl::contentView() {
-  if (m_contentView && !m_contentView->m_impl->m_wnd) {
-    this->setContentView(m_contentView);
-  }
-
-  return m_contentView;
+bool
+ui::Window::WindowImpl::isFullScreen() const {
+  return m_isFullScreen;
 }
 
 void
@@ -230,6 +235,8 @@ ui::Window::WindowImpl::enterFullScreen() {
                    mi.rcMonitor.right - mi.rcMonitor.left,
                    mi.rcMonitor.bottom - mi.rcMonitor.top,
                    SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+
+      m_isFullScreen = true;
     }
   }
 }
@@ -250,6 +257,8 @@ ui::Window::WindowImpl::exitFullScreen() {
                0, 0, 0, 0,
                SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
                SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+
+  m_isFullScreen = false;
 }
 
 void 

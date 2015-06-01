@@ -144,6 +144,11 @@ ui::Window::WindowImpl::center() {
   [m_wnd setFrameOrigin: _nsFrm.origin];
 }
 
+bool
+ui::Window::WindowImpl::isFullScreen() const {
+  return [m_wnd isFullScreen];
+}
+
 void
 ui::Window::WindowImpl::enterFullScreen() const {
   if ([m_wnd isFullScreen])

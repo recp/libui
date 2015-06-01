@@ -32,6 +32,7 @@ public:
   void hide();
 
   void center();
+  bool isFullScreen() const;
   void enterFullScreen();
   void exitFullScreen();
 
@@ -45,6 +46,7 @@ private:
                                   WPARAM wParam,
                                   LPARAM lParam);
 
+  bool                m_isFullScreen;
   int                 m_style;
   View *              m_contentView;
   WindowCloseBehavior m_closeBehavior;

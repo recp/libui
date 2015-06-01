@@ -35,6 +35,11 @@ ui::Window::center() {
   m_impl->center();
 }
 
+bool
+ui::Window::isFullScreen() const {
+  return m_impl->isFullScreen();
+}
+
 void
 ui::Window::enterFullScreen() const {
   m_impl->enterFullScreen();

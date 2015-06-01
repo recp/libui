@@ -48,6 +48,7 @@ public:
   void hide() const;
 
   void center();
+  bool isFullScreen() const;
   void enterFullScreen() const;
   void exitFullScreen() const;
 
