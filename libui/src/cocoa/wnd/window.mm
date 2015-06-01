@@ -90,6 +90,10 @@ NSUInteger translateWndStyleToCocoaWS(int style) {
 ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
     : m_self(_self) {
 
+  Rect contentViewRect({{0, 0}, {rect.size.width, rect.size.height}});
+  m_contentView = new View(contentViewRect);
+  m_contentView->setBackgroundColor(Color::whiteColor());
+
   NSInteger windowMask = translateWndStyleToCocoaWS(style);
 
   NSRect screenRect = [[NSScreen mainScreen] visibleFrame];
@@ -180,7 +184,11 @@ ui::Window::WindowImpl::setFrame(Rect frame) {
 }
 
 ui::View *
-ui::Window::WindowImpl::contentView() const {
+ui::Window::WindowImpl::contentView() {
+  if (m_contentView && !m_contentView->m_impl->m_wnd) {
+    this->setContentView(m_contentView);
+  }
+
   return m_contentView;
 }
 
@@ -206,4 +214,5 @@ ui::Window::WindowImpl::setCloseBehavior(WindowCloseBehavior closeBehavior) {
 
 ui::Window::WindowImpl::~WindowImpl() {
   m_wnd = nil;
+  delete m_contentView;
 }

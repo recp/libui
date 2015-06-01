@@ -41,7 +41,7 @@ public:
   Rect getFrame() const;
   void setFrame(Rect frame);
   
-  View * contentView() const;
+  View * contentView();
   void setContentView(View * view) ;
 
   void show() const;
