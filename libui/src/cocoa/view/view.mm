@@ -265,6 +265,15 @@ ui::View::ViewImpl::forceRedraw() {
 }
 
 ui::View::ViewImpl::~ViewImpl() {
+  std::vector<View *>::iterator it = m_subviews->begin();
+  while (m_subviews->size() > 0) {
+    View * aView = *it;
+    aView->removeFromSuperview();
+    delete aView;
+
+    it = m_subviews->begin();
+  }
+
   m_subviews->clear();
   delete m_subviews;
   m_view = nil;
