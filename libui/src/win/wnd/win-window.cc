@@ -273,7 +273,8 @@ ui::Window::WindowImpl::setContentView(ui::View * view) {
   Rect wndBounds = this->getFrame();
   wndBounds.origin = {0};
   view->setFrame(wndBounds);
-
+  
+  m_contentView = view;
   SetParent(view->m_impl->m_hWnd, m_hWnd);
 
   ShowWindow(view->m_impl->m_hWnd, 1);
@@ -281,7 +282,7 @@ ui::Window::WindowImpl::setContentView(ui::View * view) {
 
   view->m_impl->m_wnd = const_cast<Window *>(m_self);
 }
- 
+
 ui::WindowCloseBehavior 
 ui::Window::WindowImpl::getCloseBehavior() const {
   return m_closeBehavior;
