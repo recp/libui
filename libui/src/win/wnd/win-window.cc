@@ -51,13 +51,20 @@ ui::Window::WindowImpl::WindowImpl(Window *_self, Rect rect, int style)
 #endif
 
   DWORD windowMask = ui::translateWndStyleToWin32WS(style);
+
+  RECT wndExtraSizeRect;
+  AdjustWindowRectEx(&wndExtraSizeRect, windowMask, FALSE, wcex.style);
+
+  int extraWndHeight = wndExtraSizeRect.bottom - wndExtraSizeRect.top;
+  int extraWndWidth = wndExtraSizeRect.right - wndExtraSizeRect.left;
+
   m_hWnd = CreateWindow(m_szWindowClass, 
                         m_szTitle, 
                         windowMask,
                         (int)rect.origin.x, 
                         (int)rect.origin.y, 
-                        (int)rect.size.width, 
-                        (int)rect.size.height,
+                        (int)rect.size.width + extraWndWidth, 
+                        (int)rect.size.height + extraWndHeight,
                         NULL, 
                         NULL,
                         m_hInstance, 
