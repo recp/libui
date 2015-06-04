@@ -270,6 +270,10 @@ ui::Window::WindowImpl::setContentView(ui::View * view) {
     UpdateWindow(m_hWnd);
   }
 
+  Rect wndBounds = this->getFrame();
+  wndBounds.origin = {0};
+  view->setFrame(wndBounds);
+
   SetParent(view->m_impl->m_hWnd, m_hWnd);
 
   ShowWindow(view->m_impl->m_hWnd, 1);
