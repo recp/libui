@@ -26,7 +26,10 @@ struct _libui_export Color {
   double alpha;
 
   Color(const Color& color);
-  Color(double r = .0f, double g = .0f, double b = .0f, double a = 1.0f);
+  Color(double r = .0f,
+        double g = .0f,
+        double b = .0f,
+        double a = 1.f);
 
   Color(const char * hexColor);
 
