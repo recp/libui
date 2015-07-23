@@ -8,8 +8,16 @@
 #import "app.h"
 #include "menu/menu.h"
 
-ui::App::AppImpl::AppImpl(App * _self) {
+@implementation CocoaAppDelegate
+
+@end
+
+ui::App::AppImpl::AppImpl(App * _self)
+  : m_menuBarMenu(nullptr) {
   m_cocoaApp = [NSApplication sharedApplication];
+  m_appDelegate = [CocoaAppDelegate new];
+
+  [m_cocoaApp setDelegate: m_appDelegate];
   [m_cocoaApp setActivationPolicy:NSApplicationActivationPolicyRegular];
 
   // force to create a default menubar menu
@@ -47,5 +55,11 @@ ui::App::AppImpl::menuBarMenu(Menu * menu) {
 }
 
 ui::App::AppImpl::~AppImpl() {
+  [m_cocoaApp setDelegate: nil];
+  m_cocoaApp = nil;
+
+  m_appDelegate = nil;
+
   [NSApp setMainMenu: nil];
+  delete m_menuBarMenu;
 }

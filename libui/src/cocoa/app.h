@@ -14,11 +14,17 @@
 #import <AppKit/NSApplication.h>
 #else
 typedef objc_object NSApplication;
+typedef objc_object CocoaAppDelegate;
 #endif
 
 #include "../../include/ui-app.h"
 #include "../../include/ui-window.h"
 #include "../../include/ui-menu.h"
+
+#ifdef __OBJC__
+@interface CocoaAppDelegate : NSObject <NSApplicationDelegate>
+@end
+#endif
 
 namespace ui {
   
@@ -34,6 +40,7 @@ public:
   ~AppImpl();
 private:
   NSApplication * m_cocoaApp;
+  CocoaAppDelegate * m_appDelegate;
   Menu * m_menuBarMenu;
   const App * m_self;
 };
