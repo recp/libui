@@ -16,12 +16,18 @@ namespace ui {
 
 class _libui_export App {
 public:
+  typedef void (*AppOnExitCb)(void);
+
   App();
+  
   void run() const;
   void run(Window * rootWindow) const;
 
   Menu * menuBarMenu() const;
   void menuBarMenu(Menu * menu) const;
+
+  // Events
+  void onExit(AppOnExitCb cb);
 
   ~App();
 private:

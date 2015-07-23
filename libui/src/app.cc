@@ -14,6 +14,8 @@
 # include "win/win-app.h"
 #endif
 
+#include <stdlib.h>
+
 ui::App::App() {
   m_impl = new AppImpl(this);
 }
@@ -31,6 +33,11 @@ ui::App::menuBarMenu() const {
 void
 ui::App::menuBarMenu(Menu * menu) const {
   m_impl->menuBarMenu(menu);
+}
+
+void
+ui::App::onExit(AppOnExitCb cb) {
+  atexit(cb);
 }
 
 //void app::App::run(Window *rootWindow) {
