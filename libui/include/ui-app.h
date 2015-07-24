@@ -11,14 +11,18 @@
 #include "ui-base.h"
 #include "ui-window.h"
 #include "ui-menu.h"
+#include "ui-memory.h"
 
 namespace ui {
 
-class _libui_export App {
+class _libui_export App : public Object {
 public:
   typedef void (*AppOnExitCb)(void);
 
   App();
+
+  App(const App& other);
+  App& operator=(const App& other);
   
   void run() const;
   void run(Window * rootWindow) const;

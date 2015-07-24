@@ -12,6 +12,7 @@
 #include "ui-color.h"
 #include "ui-geometry.h"
 #include "ui-image.h"
+#include "ui-memory.h"
 
 #include <vector>
 #include <functional>
@@ -20,10 +21,13 @@ namespace ui {
 
 class _libui_export MenuItem;
 
-class _libui_export Menu {
+class _libui_export Menu : public Object {
 public:
   Menu();
   Menu(CStringPtr title);
+
+  Menu(const Menu& other);
+  Menu& operator=(const Menu& other);
 
   CStringPtr title() const;
   void title(CStringPtr title) const;
@@ -39,12 +43,15 @@ private:
   friend class App;
 };
 
-class _libui_export MenuItem {
+class _libui_export MenuItem : public Object  {
 public:
   typedef std::function<void (MenuItem *)> MenuItemAction;
   
   MenuItem();
   MenuItem(CStringPtr title);
+
+  MenuItem(const MenuItem& other);
+  MenuItem& operator=(const MenuItem& other);
 
   MenuItem(MenuItemAction action);
   MenuItem(CStringPtr title, MenuItemAction action);

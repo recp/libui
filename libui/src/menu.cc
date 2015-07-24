@@ -22,6 +22,26 @@ ui::Menu::Menu(CStringPtr title) {
   m_impl->title(title);
 }
 
+ui::Menu::Menu(const Menu& other) {
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  retain();
+}
+
+ui::Menu&
+ui::Menu::Menu::operator=(const Menu& other) {
+
+  if (this != &other) {
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    retain();
+  }
+
+  return *this;
+}
+
 ui::CStringPtr
 ui::Menu::title() const {
   return m_impl->title();

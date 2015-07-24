@@ -11,6 +11,7 @@
 #include "ui-base.h"
 #include "ui-color.h"
 #include "ui-geometry.h"
+#include "ui-memory.h"
 
 #include <vector>
 
@@ -18,9 +19,12 @@ namespace ui {
 
 class Window;
   
-class _libui_export View {
+class _libui_export View : public Object {
 public:
   View(Rect rect);
+
+  View(const View& other);
+  View& operator=(const View& other);
   
   Color backgroundColor() const;
   void setBackgroundColor(Color color) const;

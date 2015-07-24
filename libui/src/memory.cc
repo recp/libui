@@ -11,6 +11,18 @@ ui::Object::Object() {
   m_refCount = new int(1);
 }
 
+ui::Object::Object(const Object& other) {
+  m_refCount = other.m_refCount;
+}
+
+ui::Object&
+ui::Object::Object::operator=(const Object& other) {
+  if (this != &other)
+    m_refCount = other.m_refCount;
+
+  return *this;
+}
+
 void
 ui::Object::retain() {
   (*m_refCount)++;

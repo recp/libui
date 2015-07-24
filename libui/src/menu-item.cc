@@ -29,6 +29,26 @@ ui::MenuItem::MenuItem(CStringPtr title, MenuItemAction action) {
   m_impl = new MenuItemImpl(this, title, action);
 }
 
+ui::MenuItem::MenuItem(const MenuItem& other) {
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  retain();
+}
+
+ui::MenuItem&
+ui::MenuItem::MenuItem::operator=(const MenuItem& other) {
+
+  if (this != &other) {
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    retain();
+  }
+
+  return *this;
+}
+
 ui::Menu *
 ui::MenuItem::menu() const {
   return m_impl->menu();

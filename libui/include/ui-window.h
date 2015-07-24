@@ -11,6 +11,7 @@
 #include "ui-base.h"
 #include "ui-geometry.h"
 #include "ui-view.h"
+#include "ui-memory.h"
 
 namespace ui {
 
@@ -40,10 +41,13 @@ enum WindowCloseBehavior {
   kWindowCloseBehavior_AppShouldExit
 };
 
-class _libui_export Window /* : public IWindow */ {
+class _libui_export Window : public Object {
 public:
   Window(Rect rect, int style = 0);
   Window(Window * parent,  Rect rect, int style = 0);
+
+  Window(const Window& other);
+  Window& operator=(const Window& other);
 
   CStringPtr getTitle() const;
   void setTitle(CStringPtr title) const;

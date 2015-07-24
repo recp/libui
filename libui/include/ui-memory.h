@@ -16,6 +16,9 @@ class _libui_export Object {
 public:
   Object();
 
+  Object(const Object& other);
+  Object& operator=(const Object& other);
+
   void retain();
   int  refCount() const;
   void release();

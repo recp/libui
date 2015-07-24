@@ -20,6 +20,26 @@ ui::App::App() {
   m_impl = new AppImpl(this);
 }
 
+ui::App::App(const App& other) {
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  retain();
+}
+
+ui::App&
+ui::App::App::operator=(const App& other) {
+
+  if (this != &other) {
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    retain();
+  }
+
+  return *this;
+}
+
 void
 ui::App::run() const {
   m_impl->run();
@@ -40,10 +60,9 @@ ui::App::onExit(AppOnExitCb cb) {
   atexit(cb);
 }
 
-//void app::App::run(Window *rootWindow) {
-//  m_impl->run(rootWindow);
-//}
-
 ui::App::~App() {
+  if (*m_refCount > 0)
+    return;
+
   delete m_impl;
 }

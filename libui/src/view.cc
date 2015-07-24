@@ -19,6 +19,26 @@ ui::View::View(Rect rect) {
   m_impl = new ViewImpl(this, rect);
 }
 
+ui::View::View(const View& other) {
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  retain();
+}
+
+ui::View&
+ui::View::View::operator=(const View& other) {
+
+  if (this != &other) {
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    retain();
+  }
+
+  return *this;
+}
+
 ui::Color
 ui::View::backgroundColor() const {
   return m_impl->backgroundColor();
@@ -100,5 +120,8 @@ ui::View::forceRedraw() const {
 }
 
 ui::View::~View() {
+  if (*m_refCount > 0)
+    return;
+
   delete m_impl;
 }

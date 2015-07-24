@@ -20,6 +20,26 @@ ui::Window::Window(Rect rect, int style) {
   m_impl = new ui::Window::WindowImpl(this, rect, style);
 }
 
+ui::Window::Window(const Window& other) {
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  retain();
+}
+
+ui::Window&
+ui::Window::operator=(const Window& other) {
+
+  if (this != &other) {
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    retain();
+  }
+
+  return *this;
+}
+
 void
 ui::Window::show() const {
   m_impl->show();
