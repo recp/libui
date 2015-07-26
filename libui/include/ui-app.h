@@ -22,7 +22,10 @@ public:
   App();
 
   App(const App& other);
+  App(App&& other);
+
   App& operator=(const App& other);
+  App& operator=(App&& other);
   
   void run() const;
   void run(Window * rootWindow) const;

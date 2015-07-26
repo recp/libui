@@ -27,6 +27,16 @@ ui::App::App(const App& other) {
   retain();
 }
 
+ui::App::App(App&& other)
+  : m_impl(nullptr) {
+
+  m_refCount = other.m_refCount;
+  m_impl     = other.m_impl;
+
+  other.m_refCount = nullptr;
+  other.m_impl     = nullptr;
+}
+
 ui::App&
 ui::App::App::operator=(const App& other) {
 
@@ -35,6 +45,24 @@ ui::App::App::operator=(const App& other) {
     m_impl     = other.m_impl;
 
     retain();
+  }
+
+  return *this;
+}
+
+ui::App&
+ui::App::App::operator=(App&& other) {
+
+  if (this != &other) {
+    Object::operator=(std::move(other));
+
+    delete m_impl;
+
+    m_refCount = other.m_refCount;
+    m_impl     = other.m_impl;
+
+    other.m_refCount = nullptr;
+    other.m_impl     = nullptr;
   }
 
   return *this;

@@ -15,10 +15,29 @@ ui::Object::Object(const Object& other) {
   m_refCount = other.m_refCount;
 }
 
+ui::Object::Object(Object&& other)
+  : m_refCount(nullptr) {
+
+  m_refCount = other.m_refCount;
+  other.m_refCount = nullptr;
+}
+
 ui::Object&
 ui::Object::Object::operator=(const Object& other) {
   if (this != &other)
     m_refCount = other.m_refCount;
+
+  return *this;
+}
+
+ui::Object&
+ui::Object::Object::operator=(Object&& other) {
+  if (this != &other) {
+    delete m_refCount;
+
+    m_refCount = other.m_refCount;
+    other.m_refCount = nullptr;
+  }
 
   return *this;
 }
