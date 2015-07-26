@@ -31,6 +31,10 @@ ui::Window&
 ui::Window::operator=(const Window& other) {
 
   if (this != &other) {
+    Object::operator=(other);
+
+    delete m_impl;
+    
     m_refCount = other.m_refCount;
     m_impl     = other.m_impl;
 

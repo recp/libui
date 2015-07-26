@@ -41,6 +41,10 @@ ui::App&
 ui::App::App::operator=(const App& other) {
 
   if (this != &other) {
+    Object::operator=(other);
+
+    delete m_impl;
+    
     m_refCount = other.m_refCount;
     m_impl     = other.m_impl;
 
