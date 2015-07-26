@@ -25,7 +25,7 @@ struct _libui_export Color {
   double blue;
   double alpha;
 
-  Color(const Color& color);
+  Color(const Color& other);
   Color(double r = .0f,
         double g = .0f,
         double b = .0f,
@@ -33,7 +33,7 @@ struct _libui_export Color {
 
   Color(const char * hexColor);
 
-  Color& operator = (const Color& color);
+  Color& operator=(const Color& other);
   
 #ifdef __OBJC__
   operator NSColor *  ();;

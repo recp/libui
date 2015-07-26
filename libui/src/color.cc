@@ -9,44 +9,45 @@
 
 ui::Color::Color(double r, double g, double b, double a)
   : red(r), green(g), blue(b), alpha(a) {
-    
-};
 
-ui::Color::Color(const Color& color)
-  : red(color.red), 
-    green(color.green), 
-    blue(color.blue), 
-    alpha(color.alpha) {
-   
   float colorMaxVal = 1.0f;
 
-  if (this->red > colorMaxVal) 
-    this->red = colorMaxVal;
-  else if (this->red < 0) 
-    this->red = 0;
+  if (red > colorMaxVal)
+    red = colorMaxVal;
+  else if (red < 0)
+    red = 0;
 
-  if (this->green > colorMaxVal) 
-    this->green = colorMaxVal;
-  else if (this->green < 0) 
-    this->green = 0;
+  if (green > colorMaxVal)
+    green = colorMaxVal;
+  else if (green < 0)
+    green = 0;
 
-  if (this->blue > colorMaxVal) 
-    this->blue = colorMaxVal;
-  else if (this->blue < 0) 
-    this->blue = 0;
+  if (blue > colorMaxVal)
+    blue = colorMaxVal;
+  else if (blue < 0)
+    blue = 0;
+};
+
+ui::Color::Color(const Color& other)
+  : red(other.red),
+    green(other.green),
+    blue(other.blue),
+    alpha(other.alpha) {
 }
 
 ui::Color::Color(const char * hexColor)
-  : red(0.0f), green(0.0f), blue(0.0f), alpha(0.0f) {
-    
+  : red(0.0f),
+    green(0.0f),
+    blue(0.0f),
+    alpha(0.0f) {
 }
 
 ui::Color&
-ui::Color::operator = (const Color& color) {
-  if (this != &color) {
-    this->red = color.red;
-    this->green = color.green;
-    this->blue = color.blue;
+ui::Color::operator=(const Color& other) {
+  if (this != &other) {
+    red   = other.red;
+    green = other.green;
+    blue  = other.blue;
   }
 
   return *this;
@@ -67,15 +68,3 @@ ui::Color::whiteColor() {
   return ui::Color(1.0, 1.0, 1.0, 1.0); 
 }
 
-//CG_EXTERN CGColorRef CGColorCreate(CGColorSpaceRef space,
-//                                   const CGFloat components[]) CG_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
-//
-///* Create a color in the "Generic" gray color space. */
-//
-//CG_EXTERN CGColorRef CGColorCreateGenericGray(CGFloat gray, CGFloat alpha)
-//CG_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
-//
-///* Create a color in the "Generic" RGB color space. */
-//
-//CG_EXTERN CGColorRef CGColorCreateGenericRGB(CGFloat red, CGFloat green,
-//                                             CGFloat blue, CGFloat alpha) CG_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_NA);
