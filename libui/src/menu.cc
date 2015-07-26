@@ -62,5 +62,10 @@ ui::Menu::addMenuItem(MenuItem * menuItem) {
 }
 
 ui::Menu::~Menu() {
+  release();
+
+  if (*m_refCount > 0)
+    return;
+
   delete m_impl;
 }

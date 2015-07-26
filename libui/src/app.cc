@@ -61,6 +61,8 @@ ui::App::onExit(AppOnExitCb cb) {
 }
 
 ui::App::~App() {
+  release();
+
   if (*m_refCount > 0)
     return;
 

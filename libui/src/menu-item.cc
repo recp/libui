@@ -120,5 +120,10 @@ ui::MenuItem::setAction(MenuItemAction action) const {
 }
 
 ui::MenuItem::~MenuItem() {
+  release();
+
+  if (*m_refCount > 0)
+    return;
+
   delete m_impl;
 }

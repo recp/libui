@@ -111,5 +111,10 @@ ui::Window::setCloseBehavior(WindowCloseBehavior closeBehavior) const {
 }
 
 ui::Window::~Window() {
+  release();
+
+  if (*m_refCount > 0)
+    return;
+
   delete m_impl;
 }

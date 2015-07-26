@@ -120,6 +120,8 @@ ui::View::forceRedraw() const {
 }
 
 ui::View::~View() {
+  release();
+
   if (*m_refCount > 0)
     return;
 
