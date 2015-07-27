@@ -10,15 +10,17 @@
 
 #include "../../../include/ui-menu.h"
 
+#include <functional>
+
 ui::Menu::MenuImpl::MenuImpl(Menu * _self) {
-  m_menuItems = new std::vector<MenuItem *>();
+  m_menuItems = new std::vector<MenuItem>();
 
   // TODO:
   m_self = _self;
 }
 
 ui::Menu::MenuImpl::MenuImpl(Menu * _self, CStringPtr title) {
-  m_menuItems = new std::vector<MenuItem *>();
+  m_menuItems = new std::vector<MenuItem>();
 
   m_title = title;
   m_self = _self;
@@ -40,19 +42,26 @@ ui::Menu::MenuImpl::title(CStringPtr title) {
   // TODO:
 }
 
-std::vector<ui::MenuItem *> *
+std::vector<ui::MenuItem> *
 ui::Menu::MenuImpl::menuItems() const {
   return m_menuItems;
 }
 
 void
-ui::Menu::MenuImpl::addMenuItem(MenuItem * menuItem) {
+ui::Menu::MenuImpl::addMenuItem(const MenuItem& menuItem) {
   m_menuItems->push_back(menuItem);
+  // TODO:
+}
+
+void
+ui::Menu::MenuImpl::addMenuItem(MenuItem&& menuItem) {
+  m_menuItems->push_back(std::move(menuItem));
   // TODO:
 }
 
 ui::Menu::MenuImpl::~MenuImpl() {
   m_menuItems->clear();
+  delete m_menuItems;
   m_menuItems = nullptr;
 
   // TODO:

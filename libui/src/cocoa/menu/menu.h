@@ -32,15 +32,18 @@ public:
   CStringPtr title() const;
   void title(CStringPtr title);
   
-  std::vector<MenuItem *> * menuItems() const;
-  void addMenuItem(MenuItem * menuItem);
+  std::vector<MenuItem> * menuItems() const;
+
+  void addMenuItem(const MenuItem& menuItem);
+  void addMenuItem(MenuItem&& menuItem);
 
   ~MenuImpl();
 private:
   CStringPtr m_title;
   NSMenu * m_cocoaMenu;
-  std::vector<MenuItem *> * m_menuItems;
+  std::vector<MenuItem> * m_menuItems;
   const Menu * m_self;
+
   friend class Menu;
   friend class MenuItem;
   friend class App;

@@ -32,8 +32,10 @@ public:
   CStringPtr title() const;
   void title(CStringPtr title) const;
 
-  std::vector<MenuItem *> * menuItems() const;
-  void addMenuItem(MenuItem * menuItem);
+  std::vector<MenuItem> * menuItems() const;
+
+  void addMenuItem(const MenuItem& menuItem);
+  void addMenuItem(MenuItem&& menuItem);
 
   ~Menu();
 private:

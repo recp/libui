@@ -13,6 +13,8 @@
 #  include "win/menu/win-menu.h"
 #endif
 
+#include <functional>
+
 ui::Menu::Menu() {
   m_impl = new MenuImpl(this);
 }
@@ -55,14 +57,19 @@ void ui::Menu::title(CStringPtr title) const {
   m_impl->title(title);
 }
 
-std::vector<ui::MenuItem *> *
+std::vector<ui::MenuItem> *
 ui::Menu::menuItems() const {
   return m_impl->menuItems();
 }
 
 void
-ui::Menu::addMenuItem(MenuItem * menuItem) {
+ui::Menu::addMenuItem(const MenuItem& menuItem) {
   m_impl->addMenuItem(menuItem);
+}
+
+void
+ui::Menu::addMenuItem(MenuItem&& menuItem) {
+  m_impl->addMenuItem(std::move(menuItem));
 }
 
 ui::Menu::~Menu() {
