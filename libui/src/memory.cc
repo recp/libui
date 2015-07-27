@@ -23,7 +23,7 @@ ui::Object::Object(Object&& other)
 }
 
 ui::Object&
-ui::Object::Object::operator=(const Object& other) {
+ui::Object::operator=(const Object& other) {
   if (this != &other) {
     delete m_refCount;
 
@@ -34,7 +34,7 @@ ui::Object::Object::operator=(const Object& other) {
 }
 
 ui::Object&
-ui::Object::Object::operator=(Object&& other) {
+ui::Object::operator=(Object&& other) {
   if (this != &other) {
     delete m_refCount;
 

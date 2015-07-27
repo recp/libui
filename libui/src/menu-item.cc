@@ -37,7 +37,7 @@ ui::MenuItem::MenuItem(const MenuItem& other) {
 }
 
 ui::MenuItem&
-ui::MenuItem::MenuItem::operator=(const MenuItem& other) {
+ui::MenuItem::operator=(const MenuItem& other) {
 
   if (this != &other) {
     Object::operator=(other);

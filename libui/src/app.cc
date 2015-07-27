@@ -38,7 +38,7 @@ ui::App::App(App&& other)
 }
 
 ui::App&
-ui::App::App::operator=(const App& other) {
+ui::App::operator=(const App& other) {
 
   if (this != &other) {
     Object::operator=(other);
@@ -55,7 +55,7 @@ ui::App::App::operator=(const App& other) {
 }
 
 ui::App&
-ui::App::App::operator=(App&& other) {
+ui::App::operator=(App&& other) {
 
   if (this != &other) {
     Object::operator=(std::move(other));

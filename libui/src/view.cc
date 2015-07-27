@@ -27,7 +27,7 @@ ui::View::View(const View& other) {
 }
 
 ui::View&
-ui::View::View::operator=(const View& other) {
+ui::View::operator=(const View& other) {
 
   if (this != &other) {
     Object::operator=(other);
