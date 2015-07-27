@@ -56,10 +56,11 @@ ui::App::AppImpl::menuBarMenu(Menu * menu) {
 
 ui::App::AppImpl::~AppImpl() {
   [m_cocoaApp setDelegate: nil];
-  m_cocoaApp = nil;
-
-  m_appDelegate = nil;
-
   [NSApp setMainMenu: nil];
+
   delete m_menuBarMenu;
+
+  m_cocoaApp = nil;
+  m_appDelegate = nil;
+  m_menuBarMenu = nullptr;
 }

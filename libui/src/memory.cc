@@ -24,8 +24,11 @@ ui::Object::Object(Object&& other)
 
 ui::Object&
 ui::Object::Object::operator=(const Object& other) {
-  if (this != &other)
+  if (this != &other) {
+    delete m_refCount;
+
     m_refCount = other.m_refCount;
+  }
 
   return *this;
 }
