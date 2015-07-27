@@ -17,6 +17,9 @@ class Menu::MenuImpl {
 public:
   MenuImpl(Menu * _self);
   MenuImpl(Menu * _self, CStringPtr title);
+
+  MenuImpl(const MenuImpl& other) = delete;
+  MenuImpl& operator=(const MenuImpl& other) = delete;
   
   CStringPtr title() const;
   void title(CStringPtr title);

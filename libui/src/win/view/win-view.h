@@ -21,6 +21,9 @@ class View::ViewImpl {
 public:
   ViewImpl(View * _self, Rect rect);
 
+  ViewImpl(const ViewImpl& other) = delete;
+  ViewImpl& operator=(const ViewImpl& other) = delete;
+  
   Color backgroundColor() const;
   void setBackgroundColor(Color color);
 
