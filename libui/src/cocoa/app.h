@@ -31,6 +31,10 @@ namespace ui {
 class App::AppImpl {
 public:
   AppImpl(App * _self);
+
+  AppImpl(const AppImpl& other) = delete;
+  AppImpl& operator=(const AppImpl& other) = delete;
+
   void run();
   void run(Window * rootWindow);
 

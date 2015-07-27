@@ -37,6 +37,9 @@ public:
   MenuItemImpl(MenuItem * _self, MenuItemAction action);
   MenuItemImpl(MenuItem * _self, CStringPtr title, MenuItemAction action);
 
+  MenuItemImpl(const MenuItemImpl& other) = delete;
+  MenuItemImpl& operator=(const MenuItemImpl& other) = delete;
+
   Menu * menu() const;
 
   Menu * subMenu() const;

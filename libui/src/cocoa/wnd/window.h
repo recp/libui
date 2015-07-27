@@ -35,6 +35,9 @@ class Window::WindowImpl {
 public:
   WindowImpl(Window *_self, Rect rect, int style = 0);
 
+  WindowImpl(const WindowImpl& other) = delete;
+  WindowImpl& operator=(const WindowImpl& other) = delete;
+
   CStringPtr getTitle() const;
   void setTitle(CStringPtr title) const;
 
