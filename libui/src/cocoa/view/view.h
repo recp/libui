@@ -53,8 +53,11 @@ public:
   const View * superview() const;
   const Window * window() const;
 
-  std::vector<View *> * subviews() const;
-  void addSubview(View * subview);
+  std::vector<View> * subviews() const;
+
+  void addSubview(const View& subview);
+  void addSubview(View&& subview);
+
   void removeFromSuperview();
 
   void bringSubviewToFront(View * view);
@@ -77,7 +80,8 @@ private:
   Rect m_frame;
   Color m_bgcolor;
   CocoaView * m_view;
-  std::vector<View *> * m_subviews;
+  std::vector<View> * m_subviews;
+  
   View * m_superview;
   Window * m_wnd;
 

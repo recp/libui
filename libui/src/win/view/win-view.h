@@ -36,8 +36,11 @@ public:
   const View * superview() const;
   const Window * window() const;
 
-  std::vector<ui::View *> * subviews() const;
-  void addSubview(View * subview);
+  std::vector<ui::View> * subviews() const;
+
+  void addSubview(const View& subview);
+  void addSubview(View&& subview);
+
   void removeFromSuperview();
 
   void bringSubviewToFront(View * view);
@@ -51,7 +54,8 @@ public:
 private:
   Rect m_frame;
   Color m_bgcolor;
-  std::vector<View *> * m_subviews;
+  std::vector<View> * m_subviews;
+
   View * m_superview;
   Window * m_wnd;
 

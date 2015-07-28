@@ -25,7 +25,9 @@ public:
 
   View(const View& other);
   View& operator=(const View& other);
-  
+
+  bool operator==(const View& other) const;
+
   Color backgroundColor() const;
   void setBackgroundColor(Color color) const;
   
@@ -43,9 +45,11 @@ public:
   //void transform();
   
   // View Hierarchy
-  std::vector<View *> * subviews() const;
-  void addSubview(View * subview) const;
-  
+  std::vector<View> * subviews() const;
+
+  void addSubview(const View& subview) const;
+  void addSubview(View&& subview) const;
+
   void removeFromSuperview() const;
   
   void bringSubviewToFront(View * view) const;

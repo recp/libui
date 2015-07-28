@@ -7,6 +7,9 @@
 
 #import "view.h"
 
+#include <algorithm>
+#include <functional>
+
 @implementation CocoaView
 
 - (instancetype) initWithFrame: (NSRect)frameRect {
@@ -60,7 +63,7 @@ ui::View::ViewImpl::ViewImpl(View * _self, Rect rect)
     m_superview(nullptr),
     m_wnd(nullptr) {
 
-  m_subviews = new std::vector<View *>();
+  m_subviews = new std::vector<View>();
   m_frame = rect;
 
   NSRect _nsRect = NSMakeRect(rect.origin.x,
@@ -111,32 +114,56 @@ ui::View::ViewImpl::window() const {
   return m_wnd;
 }
 
-std::vector<ui::View *> *
+std::vector<ui::View> *
 ui::View::ViewImpl::subviews() const {
   return m_subviews;
 }
 
 void
-ui::View::ViewImpl::addSubview(View *subview) {
-  subview->removeFromSuperview();
+ui::View::ViewImpl::addSubview(const View& subview) {
+  subview.removeFromSuperview();
 
-  ViewImpl * subviewImpl = subview->m_impl;
+  ViewImpl * subviewImpl = subview.m_impl;
 
   subviewImpl->m_superview = const_cast<View *>(this->m_self);
   subviewImpl->m_wnd = m_wnd;
 
-  subview->setFrame(subview->getFrame());
+  subview.setFrame(subview.getFrame());
 
   [m_view addSubview: subviewImpl->m_view];
 
   // Update all subviews' window ptr
-  std::vector<View *>::iterator subview_it =
-  subviewImpl->m_subviews->begin();
+  std::vector<View>::iterator subview_it =
+    subviewImpl->m_subviews->begin();
+
   for (; subview_it != subviewImpl->m_subviews->end(); subview_it++) {
-    (*subview_it)->m_impl->m_wnd = m_wnd;
+    subview_it->m_impl->m_wnd = m_wnd;
   }
 
   m_subviews->push_back(subview);
+}
+
+void
+ui::View::ViewImpl::addSubview(View&& subview) {
+  subview.removeFromSuperview();
+
+  ViewImpl * subviewImpl = subview.m_impl;
+
+  subviewImpl->m_superview = const_cast<View *>(this->m_self);
+  subviewImpl->m_wnd = m_wnd;
+
+  subview.setFrame(subview.getFrame());
+
+  [m_view addSubview: subviewImpl->m_view];
+
+  // Update all subviews' window ptr
+  std::vector<View>::iterator subview_it =
+    subviewImpl->m_subviews->begin();
+
+  for (; subview_it != subviewImpl->m_subviews->end(); subview_it++)
+    subview_it->m_impl->m_wnd = m_wnd;
+
+  m_subviews->push_back(std::move(subview));
 }
 
 void
@@ -146,24 +173,23 @@ ui::View::ViewImpl::removeFromSuperview() {
 
   [m_view removeFromSuperview];
 
-  View * _self = const_cast<View * >(m_self);
+  View * _self = const_cast<View *>(m_self);
 
   ViewImpl * superviewImpl = m_superview->m_impl;
 
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
   std::find(superviewImpl->m_subviews->begin(),
             superviewImpl->m_subviews->end(),
-            _self);
+            *_self);
 
   if (fountView_it != superviewImpl->m_subviews->end()) {
     superviewImpl->m_subviews->erase(fountView_it);
   }
 
   // Update all subviews' window ptr
-  std::vector<View *>::iterator subview_it = m_subviews->begin();
-  for (; subview_it != m_subviews->end(); subview_it++) {
-    (*subview_it)->m_impl->m_wnd = nullptr;
-  }
+  std::vector<View>::iterator subview_it = m_subviews->begin();
+  for (; subview_it != m_subviews->end(); subview_it++)
+    subview_it->m_impl->m_wnd = nullptr;
 
   m_superview = nullptr;
 }
@@ -188,21 +214,21 @@ void
 ui::View::ViewImpl::bringSubviewToFront(View * view) {
   ViewImpl * viewImpl = view->m_impl;
 
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
   std::find(m_subviews->begin(),
             m_subviews->end(),
-            view);
+            *view);
 
   if (fountView_it == m_subviews->end())
     return;
 
   // change z-order in vactor for next
   m_subviews->erase(fountView_it);
-  m_subviews->push_back(view);
+  m_subviews->push_back(std::move(*view));
 
   for (int i = 0; i < m_subviews->size(); i++) {
-    View * aView = m_subviews->at(i);
-    aView->m_impl->setZIndex(i);
+    const View& aView = m_subviews->at(i);
+    aView.m_impl->setZIndex(i);
   }
 
   [m_view sortSubviewsUsingFunction: ViewImpl::viewSiblingViewsCmp
@@ -213,21 +239,21 @@ void
 ui::View::ViewImpl::sendSubviewToBack(View * view) {
   ViewImpl * viewImpl = view->m_impl;
 
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
   std::find(m_subviews->begin(),
             m_subviews->end(),
-            view);
+            *view);
 
   if (fountView_it == m_subviews->end())
     return;
 
   // change z-order in vactor for next
   m_subviews->erase(fountView_it);
-  m_subviews->insert(m_subviews->begin(), view);
+  m_subviews->insert(m_subviews->begin(), std::move(*view));
 
   for (int i = 0; i < m_subviews->size(); i++) {
-    View * aView = m_subviews->at(i);
-    aView->m_impl->setZIndex(i);
+    const View& aView = m_subviews->at(i);
+    aView.m_impl->setZIndex(i);
   }
 
   [m_view sortSubviewsUsingFunction: ViewImpl::viewSiblingViewsCmp
@@ -265,7 +291,8 @@ ui::View::ViewImpl::forceRedraw() {
 }
 
 ui::View::ViewImpl::~ViewImpl() {
-  std::vector<View *>::iterator it = m_subviews->begin();
+  /*
+  std::vector<View>::iterator it = m_subviews->begin();
   while (m_subviews->size() > 0) {
     View * aView = *it;
     aView->removeFromSuperview();
@@ -273,6 +300,7 @@ ui::View::ViewImpl::~ViewImpl() {
 
     it = m_subviews->begin();
   }
+  */
 
   m_subviews->clear();
   delete m_subviews;

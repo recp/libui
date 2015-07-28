@@ -12,13 +12,14 @@
 #include "../win-utils.h"
 
 #include <algorithm>
+#include <functional>
 
 ui::View::ViewImpl::ViewImpl(View * _self, Rect rect) 
   : m_self(_self),
     m_superview(nullptr),
     m_wnd(nullptr) {
 
-  m_subviews = new std::vector<View *>;
+  m_subviews = new std::vector<View>();
   m_frame = rect;
 
   m_hInstance = GetModuleHandle(NULL);
@@ -164,16 +165,16 @@ ui::View::ViewImpl::setInputEnabled(bool enabled) {
   EnableWindow(m_hWnd, enabled);
 }
 
-std::vector<ui::View *> *
+std::vector<ui::View> *
 ui::View::ViewImpl::subviews() const {
   return m_subviews;
 }
 
 void 
-ui::View::ViewImpl::addSubview(View * subview) {
-  subview->removeFromSuperview();
+ui::View::ViewImpl::addSubview(const View& subview) {
+  subview.removeFromSuperview();
 
-  ViewImpl * subviewImpl = subview->m_impl;
+  ViewImpl * subviewImpl = subview.m_impl;
 
   subviewImpl->m_superview = const_cast<View *>(this->m_self);
   subviewImpl->m_wnd = m_wnd;
@@ -183,14 +184,38 @@ ui::View::ViewImpl::addSubview(View * subview) {
   UpdateWindow(subviewImpl->m_hWnd);
 
   // Update all subviews' window ptr
-  std::vector<View *>::iterator subview_it = 
+  std::vector<View>::iterator subview_it = 
     subviewImpl->m_subviews->begin();
   for (; subview_it != subviewImpl->m_subviews->end(); subview_it++) {
-    (*subview_it)->m_impl->m_wnd = m_wnd;
+    subview_it->m_impl->m_wnd = m_wnd;
   }
 
-  this->bringSubviewToFront(subview);
+  this->bringSubviewToFront(&*const_cast<View *>(&subview));
   m_subviews->push_back(subview);
+}
+
+void 
+ui::View::ViewImpl::addSubview(View&& subview) {
+  subview.removeFromSuperview();
+
+  ViewImpl * subviewImpl = subview.m_impl;
+
+  subviewImpl->m_superview = const_cast<View *>(this->m_self);
+  subviewImpl->m_wnd = m_wnd;
+
+  SetParent(subviewImpl->m_hWnd, m_hWnd);
+  ShowWindow(subviewImpl->m_hWnd, SW_SHOWNORMAL);
+  UpdateWindow(subviewImpl->m_hWnd);
+
+  // Update all subviews' window ptr
+  std::vector<View>::iterator subview_it = 
+    subviewImpl->m_subviews->begin();
+  for (; subview_it != subviewImpl->m_subviews->end(); subview_it++) {
+    subview_it->m_impl->m_wnd = m_wnd;
+  }
+
+  this->bringSubviewToFront(&subview);
+  m_subviews->push_back(std::move(subview));
 }
 
 void 
@@ -205,20 +230,19 @@ ui::View::ViewImpl::removeFromSuperview() {
  
   ViewImpl * superviewImpl = m_superview->m_impl;
 
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
     std::find(superviewImpl->m_subviews->begin(),
               superviewImpl->m_subviews->end(), 
-              _self);
+              *_self);
 
   if (fountView_it != superviewImpl->m_subviews->end()) {
     superviewImpl->m_subviews->erase(fountView_it);
   }
 
   // Update all subviews' window ptr
-  std::vector<View *>::iterator subview_it = m_subviews->begin();
-  for (; subview_it != m_subviews->end(); subview_it++) {
-    (*subview_it)->m_impl->m_wnd = nullptr;
-  }
+  std::vector<View>::iterator subview_it = m_subviews->begin();
+  for (; subview_it != m_subviews->end(); subview_it++)
+    subview_it->m_impl->m_wnd = nullptr;
 
   m_superview = nullptr;
 };
@@ -240,8 +264,8 @@ ui::View::ViewImpl::bringSubviewToFront(View * view) {
   if (m_subviews->size() < 1)
     return;
 
-  View * topView = m_subviews->back();
-  ViewImpl * topViewImpl = topView->m_impl;
+  const View& topView = m_subviews->back();
+  ViewImpl * topViewImpl = topView.m_impl;
 
   SetWindowPos(viewImpl->m_hWnd, 
                topViewImpl->m_hWnd, 
@@ -256,16 +280,16 @@ ui::View::ViewImpl::bringSubviewToFront(View * view) {
   UpdateWindow(m_hWnd);
 
   // change z-order in vactor for next 
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
     std::find(m_subviews->begin(),
               m_subviews->end(), 
-              view);
+              *view);
 
   if (fountView_it == m_subviews->end())
     return;
 
   m_subviews->erase(fountView_it);
-  m_subviews->push_back(view);
+  m_subviews->push_back(std::move(*view));
 }
 
 void 
@@ -288,16 +312,16 @@ ui::View::ViewImpl::sendSubviewToBack(View * view) {
   UpdateWindow(m_hWnd);
 
   // change z-order in vactor for next
-  std::vector<View *>::iterator fountView_it =
+  std::vector<View>::iterator fountView_it =
   std::find(m_subviews->begin(),
             m_subviews->end(), 
-            view);
+            *view);
 
   if (fountView_it == m_subviews->end())
     return;
 
   m_subviews->erase(fountView_it);
-  m_subviews->insert(m_subviews->begin(), view);
+  m_subviews->insert(m_subviews->begin(), std::move(*view));
 }
 
 void 
@@ -324,7 +348,8 @@ ui::View::ViewImpl::forceRedraw() const {
 }
 
 ui::View::ViewImpl::~ViewImpl() {
-  std::vector<View *>::iterator it = m_subviews->begin();
+ /*
+ std::vector<View *>::iterator it = m_subviews->begin();
   while (m_subviews->size() > 0) {
     View * aView = *it;
     aView->removeFromSuperview();
@@ -332,6 +357,7 @@ ui::View::ViewImpl::~ViewImpl() {
 
     it = m_subviews->begin();
   }
+  */
 
   m_subviews->clear();
   delete m_subviews;

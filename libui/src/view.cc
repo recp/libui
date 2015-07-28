@@ -43,6 +43,12 @@ ui::View::operator=(const View& other) {
   return *this;
 }
 
+bool
+ui::View::operator==(const View& other) const {
+  // compare address of impl for now
+  return m_impl == other.m_impl;
+}
+
 ui::Color
 ui::View::backgroundColor() const {
   return m_impl->backgroundColor();
@@ -83,14 +89,19 @@ ui::View::window() const {
   return m_impl->window();
 }
 
-std::vector<ui::View *> *
+std::vector<ui::View> *
 ui::View::subviews() const {
   return m_impl->subviews();
 }
 
 void
-ui::View::addSubview(View *subview) const {
+ui::View::addSubview(const View& subview) const {
   m_impl->addSubview(subview);
+}
+
+void
+ui::View::addSubview(View&& subview) const {
+  m_impl->addSubview(std::move(subview));
 }
 
 void
