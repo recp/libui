@@ -13,6 +13,8 @@
 #  include "win/menu/win-menu-item.h"
 #endif
 
+#include <functional>
+
 ui::MenuItem::MenuItem() {
   m_impl = new MenuItemImpl(this);
 }
@@ -36,6 +38,13 @@ ui::MenuItem::MenuItem(const MenuItem& other)
   retain();
 }
 
+ui::MenuItem::MenuItem(MenuItem&& other)
+  : m_impl(std::move(other.m_impl)),
+    ui::Object(std::move(other)) {
+
+  other.m_impl = nullptr;
+}
+
 ui::MenuItem&
 ui::MenuItem::operator=(const MenuItem& other) {
 
@@ -45,6 +54,20 @@ ui::MenuItem::operator=(const MenuItem& other) {
     delete m_impl;
     m_impl = other.m_impl;
     retain();
+  }
+
+  return *this;
+}
+
+ui::MenuItem&
+ui::MenuItem::operator=(MenuItem&& other) {
+
+  if (this != &other) {
+    Object::operator=(std::move(other));
+
+    delete m_impl;
+    m_impl = std::move(other.m_impl);
+    other.m_impl = nullptr;
   }
 
   return *this;

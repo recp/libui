@@ -31,6 +31,13 @@ ui::Menu::Menu(const Menu& other)
   retain();
 }
 
+ui::Menu::Menu(Menu&& other)
+  : m_impl(std::move(other.m_impl)),
+    ui::Object(std::move(other)) {
+
+  other.m_impl = nullptr;
+}
+
 ui::Menu&
 ui::Menu::operator=(const Menu& other) {
 
@@ -40,6 +47,20 @@ ui::Menu::operator=(const Menu& other) {
     delete m_impl;
     m_impl = other.m_impl;
     retain();
+  }
+
+  return *this;
+}
+
+ui::Menu&
+ui::Menu::operator=(Menu&& other) {
+
+  if (this != &other) {
+    Object::operator=(std::move(other));
+
+    delete m_impl;
+    m_impl = std::move(other.m_impl);
+    other.m_impl = nullptr;
   }
 
   return *this;

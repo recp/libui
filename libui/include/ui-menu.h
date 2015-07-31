@@ -27,7 +27,10 @@ public:
   Menu(CStringPtr title);
 
   Menu(const Menu& other);
+  Menu(Menu&& other);
+
   Menu& operator=(const Menu& other);
+  Menu& operator=(Menu&& other);
 
   CStringPtr title() const;
   void title(CStringPtr title) const;
@@ -53,7 +56,10 @@ public:
   MenuItem(CStringPtr title);
 
   MenuItem(const MenuItem& other);
+  MenuItem(MenuItem&& other);
+
   MenuItem& operator=(const MenuItem& other);
+  MenuItem& operator=(MenuItem&& other);
 
   MenuItem(MenuItemAction action);
   MenuItem(CStringPtr title, MenuItemAction action);
