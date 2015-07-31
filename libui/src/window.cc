@@ -27,6 +27,13 @@ ui::Window::Window(const Window& other)
   retain();
 }
 
+ui::Window::Window(Window&& other)
+  : m_impl(std::move(other.m_impl)),
+    ui::Object(std::move(other)) {
+
+  other.m_impl = nullptr;
+}
+
 ui::Window&
 ui::Window::operator=(const Window& other) {
 
@@ -36,6 +43,20 @@ ui::Window::operator=(const Window& other) {
     delete m_impl;
     m_impl = other.m_impl;
     retain();
+  }
+
+  return *this;
+}
+
+ui::Window&
+ui::Window::operator=(Window&& other) {
+
+  if (this != &other) {
+    Object::operator=(std::move(other));
+
+    delete m_impl;
+    m_impl = std::move(other.m_impl);
+    other.m_impl = nullptr;
   }
 
   return *this;

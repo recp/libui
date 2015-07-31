@@ -47,7 +47,10 @@ public:
   Window(Window * parent,  Rect rect, int style = 0);
 
   Window(const Window& other);
+  Window(Window&& other);
+
   Window& operator=(const Window& other);
+  Window& operator=(Window&& other);
 
   CStringPtr getTitle() const;
   void setTitle(CStringPtr title) const;
