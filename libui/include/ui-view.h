@@ -24,7 +24,10 @@ public:
   View(Rect rect);
 
   View(const View& other);
+  View(View&& other);
+
   View& operator=(const View& other);
+  View& operator=(View&& other);
 
   bool operator==(const View& other) const;
 

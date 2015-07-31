@@ -19,11 +19,19 @@ ui::View::View(Rect rect) {
   m_impl = new ViewImpl(this, rect);
 }
 
-ui::View::View(const View& other) {
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
+ui::View::View(const View& other)
+  : m_impl(other.m_impl),
+    ui::Object(other) {
 
   retain();
+}
+
+ui::View::View(View&& other)
+  : m_impl(std::move(other.m_impl)),
+    ui::Object(std::move(other)) {
+
+  other.m_refCount = nullptr;
+  other.m_impl     = nullptr;
 }
 
 ui::View&
@@ -38,6 +46,23 @@ ui::View::operator=(const View& other) {
     m_impl     = other.m_impl;
 
     retain();
+  }
+
+  return *this;
+}
+
+ui::View&
+ui::View::operator=(View&& other) {
+
+  if (this != &other) {
+    Object::operator=(std::move(other));
+
+    delete m_impl;
+
+    m_impl = std::move(other.m_impl);
+
+    other.m_refCount = nullptr;
+    other.m_impl     = nullptr;
   }
 
   return *this;
