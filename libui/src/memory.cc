@@ -7,18 +7,19 @@
 
 #include "../include/ui-memory.h"
 
+#include <functional>
+
 ui::Object::Object() {
   m_refCount = new int(1);
 }
 
-ui::Object::Object(const Object& other) {
-  m_refCount = other.m_refCount;
+ui::Object::Object(const Object& other)
+: m_refCount(other.m_refCount) {
 }
 
 ui::Object::Object(Object&& other)
-  : m_refCount(nullptr) {
+: m_refCount(std::move(other.m_refCount)) {
 
-  m_refCount = other.m_refCount;
   other.m_refCount = nullptr;
 }
 
