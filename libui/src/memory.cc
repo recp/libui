@@ -14,11 +14,11 @@ ui::Object::Object() {
 }
 
 ui::Object::Object(const Object& other)
-: m_refCount(other.m_refCount) {
+  : m_refCount(other.m_refCount) {
 }
 
 ui::Object::Object(Object&& other)
-: m_refCount(std::move(other.m_refCount)) {
+  : m_refCount(std::move(other.m_refCount)) {
 
   other.m_refCount = nullptr;
 }
@@ -39,7 +39,7 @@ ui::Object::operator=(Object&& other) {
   if (this != &other) {
     delete m_refCount;
 
-    m_refCount = other.m_refCount;
+    m_refCount = std::move(other.m_refCount);
     other.m_refCount = nullptr;
   }
 
