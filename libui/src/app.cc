@@ -15,26 +15,24 @@
 #endif
 
 #include <stdlib.h>
+#include <functional>
 
 ui::App::App() {
   m_impl = new AppImpl(this);
 }
 
-ui::App::App(const App& other) {
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
+ui::App::App(const App& other)
+  : m_impl(other.m_impl),
+    ui::Object(other) {
 
   retain();
 }
 
 ui::App::App(App&& other)
-  : m_impl(nullptr) {
+  : m_impl(std::move(other.m_impl)),
+    ui::Object(std::move(other)) {
 
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
-
-  other.m_refCount = nullptr;
-  other.m_impl     = nullptr;
+  other.m_impl = nullptr;
 }
 
 ui::App&
@@ -44,10 +42,7 @@ ui::App::operator=(const App& other) {
     Object::operator=(other);
 
     delete m_impl;
-    
-    m_refCount = other.m_refCount;
-    m_impl     = other.m_impl;
-
+    m_impl = other.m_impl;
     retain();
   }
 
@@ -61,12 +56,8 @@ ui::App::operator=(App&& other) {
     Object::operator=(std::move(other));
 
     delete m_impl;
-
-    m_refCount = other.m_refCount;
-    m_impl     = other.m_impl;
-
-    other.m_refCount = nullptr;
-    other.m_impl     = nullptr;
+    m_impl = std::move(other.m_impl);
+    other.m_impl = nullptr;
   }
 
   return *this;

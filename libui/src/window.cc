@@ -20,9 +20,9 @@ ui::Window::Window(Rect rect, int style) {
   m_impl = new ui::Window::WindowImpl(this, rect, style);
 }
 
-ui::Window::Window(const Window& other) {
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
+ui::Window::Window(const Window& other)
+  : m_impl(other.m_impl),
+    ui::Object(other) {
 
   retain();
 }
@@ -34,10 +34,7 @@ ui::Window::operator=(const Window& other) {
     Object::operator=(other);
 
     delete m_impl;
-    
-    m_refCount = other.m_refCount;
-    m_impl     = other.m_impl;
-
+    m_impl = other.m_impl;
     retain();
   }
 

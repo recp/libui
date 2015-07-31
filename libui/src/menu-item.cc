@@ -29,9 +29,9 @@ ui::MenuItem::MenuItem(CStringPtr title, MenuItemAction action) {
   m_impl = new MenuItemImpl(this, title, action);
 }
 
-ui::MenuItem::MenuItem(const MenuItem& other) {
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
+ui::MenuItem::MenuItem(const MenuItem& other)
+  : m_impl(other.m_impl),
+    ui::Object(other) {
 
   retain();
 }
@@ -43,10 +43,7 @@ ui::MenuItem::operator=(const MenuItem& other) {
     Object::operator=(other);
 
     delete m_impl;
-    
-    m_refCount = other.m_refCount;
-    m_impl     = other.m_impl;
-
+    m_impl = other.m_impl;
     retain();
   }
 

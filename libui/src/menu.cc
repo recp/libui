@@ -24,9 +24,9 @@ ui::Menu::Menu(CStringPtr title) {
   m_impl->title(title);
 }
 
-ui::Menu::Menu(const Menu& other) {
-  m_refCount = other.m_refCount;
-  m_impl     = other.m_impl;
+ui::Menu::Menu(const Menu& other)
+  : m_impl(other.m_impl),
+    ui::Object(other) {
 
   retain();
 }
@@ -38,10 +38,7 @@ ui::Menu::operator=(const Menu& other) {
     Object::operator=(other);
 
     delete m_impl;
-    
-    m_refCount = other.m_refCount;
-    m_impl     = other.m_impl;
-
+    m_impl = other.m_impl;
     retain();
   }
 
