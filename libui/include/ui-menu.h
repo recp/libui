@@ -71,8 +71,10 @@ public:
   CStringPtr title() const;
   void title(CStringPtr title) const;
 
-  Image image() const;
-  void image(Image image) const;
+  const Image& image() const;
+
+  void setImage(const Image& image) const;
+  void setImage(Image&& image) const;
 
   bool highlighted() const;
   void highlighted(bool highlighted);

@@ -8,6 +8,8 @@
 #include "menu-item.h"
 #include "menu.h"
 
+#include <functional>
+
 @implementation CocoaMenuItem
 
 - (void)customAction: (id)sender {
@@ -25,7 +27,13 @@
 
 @end
 
-ui::MenuItem::MenuItemImpl::MenuItemImpl(MenuItem * _self) {
+ui::MenuItem::MenuItemImpl::MenuItemImpl(MenuItem * _self)
+  : m_title(nullptr),
+    m_menu(nullptr),
+    m_subMenu(nullptr),
+    m_keyEquivalent(nullptr),
+    m_cocoaMenuItem(nullptr) {
+
   m_cocoaMenuItem = [[CocoaMenuItem alloc] init];
   m_cocoaMenuItem->m_menuItem = _self;
   m_self = _self;
@@ -92,14 +100,20 @@ ui::MenuItem::MenuItemImpl::title(CStringPtr title) {
   [m_cocoaMenuItem setTitle: _nsTitle];
 }
 
-ui::Image
+const ui::Image&
 ui::MenuItem::MenuItemImpl::image() const {
   return m_image;
 }
 
 void
-ui::MenuItem::MenuItemImpl::image(Image image) {
+ui::MenuItem::MenuItemImpl::setImage(const Image& image) {
   m_image = image;
+  // TODO:
+}
+
+void
+ui::MenuItem::MenuItemImpl::setImage(Image&& image) {
+  m_image = std::move(image);
   // TODO:
 }
 

@@ -48,8 +48,10 @@ public:
   CStringPtr title() const;
   void title(CStringPtr title);
 
-  Image image() const;
-  void image(Image image);
+  const Image& image() const;
+
+  void setImage(const Image& image);
+  void setImage(Image&& image);
 
   bool highlighted() const;
   void highlighted(bool highlighted);

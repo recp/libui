@@ -98,14 +98,19 @@ ui::MenuItem::title(CStringPtr title) const {
   m_impl->title(title);
 }
 
-ui::Image
+const ui::Image&
 ui::MenuItem::image() const {
   return m_impl->image();
 }
 
 void
-ui::MenuItem::image(Image image) const {
-  m_impl->image(image);
+ui::MenuItem::setImage(const Image& image) const {
+  m_impl->setImage(image);
+}
+
+void
+ui::MenuItem::setImage(Image&& image) const {
+  m_impl->setImage(std::move(image));
 }
 
 bool
