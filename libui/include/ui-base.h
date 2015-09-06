@@ -12,6 +12,8 @@ namespace ui {
 
 typedef const char * CStringPtr;
 typedef char * CMutStringPtr;
+typedef const wchar_t * CWStringPtr;
+typedef wchar_t * CMutWStringPtr;
 
 }
 
